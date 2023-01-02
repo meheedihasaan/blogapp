@@ -9,20 +9,15 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "users")
-public class User {
+@Table(name = "categories")
+public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    @Column(name = "name", nullable = false)
-    private String name;
 
-    @Column(name = "email", nullable = false)
-    private String email;
-
-    @Column(name = "password", nullable = false)
-    private String password;
+    @Column(name = "title", nullable = false)
+    private String title;
 
     @Column(name = "description", nullable = true)
     private String description;
