@@ -21,9 +21,9 @@ public class CategoryServiceImplementation implements CategoryService {
     @Autowired
     private ModelMapper modelMapper;
 
-    //To add a category
+    //To create a category
     @Override
-    public CategoryDto addCategory(CategoryDto categoryDto) {
+    public CategoryDto createCategory(CategoryDto categoryDto) {
         Category category = this.dtoToCategory(categoryDto);
         Category savedCategory = this.categoryRepository.save(category);
         return categoryToDto(savedCategory);

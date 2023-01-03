@@ -26,6 +26,7 @@ public class UserServiceImplementation implements UserService {
     public UserDto addUser(UserDto userDto) {
         User user = this.dtoToUser(userDto);
         User savedUser = this.userRepository.save(user);
+
         return this.userToDto(savedUser);
     }
 
@@ -79,7 +80,6 @@ public class UserServiceImplementation implements UserService {
 //        user.setDescription(userDto.getDescription());
 
         User user = this.modelMapper.map(userDto, User.class);
-
         return user;
     }
 
@@ -93,7 +93,6 @@ public class UserServiceImplementation implements UserService {
 //        userDto.setDescription(user.getDescription());
 
         UserDto userDto = this.modelMapper.map(user, UserDto.class);
-
         return userDto;
     }
 

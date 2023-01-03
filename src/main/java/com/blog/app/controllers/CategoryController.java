@@ -18,10 +18,10 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
-    //To add a category
+    //To create a category
     @PostMapping("/add")
-    public ResponseEntity<CategoryDto> addCategory(@Valid @RequestBody CategoryDto categoryDto){
-        CategoryDto savedCategoryDto = this.categoryService.addCategory(categoryDto);
+    public ResponseEntity<CategoryDto> createCategory(@Valid @RequestBody CategoryDto categoryDto){
+        CategoryDto savedCategoryDto = this.categoryService.createCategory(categoryDto);
         return new ResponseEntity<CategoryDto>(savedCategoryDto, HttpStatus.CREATED);
     }
 

@@ -6,8 +6,8 @@ import java.util.List;
 
 public interface CategoryService {
 
-    //To add a category
-    public CategoryDto addCategory(CategoryDto categoryDto);
+    //To create a category
+    public CategoryDto createCategory(CategoryDto categoryDto);
 
     //To get all the categories
     public List<CategoryDto> getAllCategories();
