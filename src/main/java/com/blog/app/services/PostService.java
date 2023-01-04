@@ -10,7 +10,7 @@ public interface PostService {
     public PostDto createPost(PostDto postDto, int userId, int categoryId);
 
     //To get all the posts
-    public List<PostDto> getAllPosts();
+    public List<PostDto> getAllPosts(int pageNumber, int pageSize);
 
     //To get a post by its id
     public PostDto getPostById(int id);
