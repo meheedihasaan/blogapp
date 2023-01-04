@@ -34,11 +34,11 @@ public class CategoryServiceImplementation implements CategoryService {
     public List<CategoryDto> getAllCategories() {
         List<Category> categories = this.categoryRepository.findAll();
         //Convert categories to categoryDtos
-        List<CategoryDto> categoryDtos = categories
+        List<CategoryDto> categoriesDto = categories
                                                 .stream()
                                                 .map((category)-> this.categoryToDto(category))
                                                 .collect(Collectors.toList());
-        return categoryDtos;
+        return categoriesDto;
     }
 
     //To get a category by its id

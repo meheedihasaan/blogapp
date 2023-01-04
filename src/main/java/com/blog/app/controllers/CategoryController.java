@@ -19,38 +19,38 @@ public class CategoryController {
     private CategoryService categoryService;
 
     //To create a category
-    @PostMapping("/add")
+    @PostMapping("/create")
     public ResponseEntity<CategoryDto> createCategory(@Valid @RequestBody CategoryDto categoryDto){
         CategoryDto savedCategoryDto = this.categoryService.createCategory(categoryDto);
-        return new ResponseEntity<CategoryDto>(savedCategoryDto, HttpStatus.CREATED);
+        return new ResponseEntity<>(savedCategoryDto, HttpStatus.CREATED);
     }
 
     //To get all the categories
     @GetMapping("/all")
     public ResponseEntity<List<CategoryDto>> getAllCategories(){
-        List<CategoryDto> categoryDtos = this.categoryService.getAllCategories();
-        return new ResponseEntity<List<CategoryDto>>(categoryDtos, HttpStatus.OK);
+        List<CategoryDto> categoriesDto = this.categoryService.getAllCategories();
+        return new ResponseEntity<>(categoriesDto, HttpStatus.OK);
     }
 
     //To get a category by its id
     @GetMapping("/{id}")
     public ResponseEntity<CategoryDto> getCategoryById(@PathVariable int id){
         CategoryDto categoryDto = this.categoryService.getCategoryByID(id);
-        return new ResponseEntity<CategoryDto>(categoryDto, HttpStatus.OK);
+        return new ResponseEntity<>(categoryDto, HttpStatus.OK);
     }
 
     //To update a category
-    @PutMapping("/update/{id}")
+    @PutMapping("/{id}/update")
     public  ResponseEntity<CategoryDto> updateCategory(@Valid @RequestBody CategoryDto categoryDto, @PathVariable int id){
         CategoryDto updatedCategoryDto = this.categoryService.updateCategory(categoryDto, id);
-        return new ResponseEntity<CategoryDto>(updatedCategoryDto, HttpStatus.OK);
+        return new ResponseEntity<>(updatedCategoryDto, HttpStatus.OK);
     }
 
     //To delete a category by its id
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}/delete")
     public ResponseEntity<ApiResponse> deleteCategory(@PathVariable int id){
         this.categoryService.deleteCategory(id);
-        return new ResponseEntity<ApiResponse>(new ApiResponse("Category deleted successfully.", true), HttpStatus.OK);
+        return new ResponseEntity<>(new ApiResponse("Category deleted successfully.", true), HttpStatus.OK);
     }
 
 }

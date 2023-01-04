@@ -52,11 +52,11 @@ public class PostServiceImplementation implements PostService {
     @Override
     public List<PostDto> getAllPosts() {
         List<Post> posts = this.postRepository.findAll();
-        List<PostDto> postDtos = posts
+        List<PostDto> postsDto = posts
                                     .stream()
                                     .map(post-> this.postToDto(post))
                                     .collect(Collectors.toList());
-        return postDtos;
+        return postsDto;
     }
 
     //To get a post by its id
@@ -69,7 +69,14 @@ public class PostServiceImplementation implements PostService {
     //To update a post
     @Override
     public PostDto updatePost(PostDto postDto, int id) {
-        return null;
+        Post post = this.postRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Post", "id", id));
+        post.setTitle(postDto.getTitle());
+        post.setContent(postDto.getContent());
+        post.setImageUrl(postDto.getImageUrl());
+        post.setCategory(this.modelMapper.map(postDto.getCategory(), Category.class)); //Convert CategoryDto to Category
+
+        Post updatedPost = this.postRepository.save(post);
+        return this.postToDto(updatedPost);
     }
 
     //To delete a post by its id
@@ -84,11 +91,11 @@ public class PostServiceImplementation implements PostService {
     public List<PostDto> getPostsByUser(int userId) {
         User user = this.userRepository.findById(userId).orElseThrow(()-> new ResourceNotFoundException("User", "id", userId));
         List<Post> posts = this.postRepository.findByUser(user);
-        List<PostDto> postDtos = posts
+        List<PostDto> postsDto = posts
                                     .stream()
                                     .map(post-> this.postToDto(post))
                                     .collect(Collectors.toList());
-        return postDtos;
+        return postsDto;
     }
 
     //To get posts by their category
@@ -96,11 +103,11 @@ public class PostServiceImplementation implements PostService {
     public List<PostDto> getPostByCategory(int categoryId) {
         Category category = this.categoryRepository.findById(categoryId).orElseThrow(()-> new ResourceNotFoundException("Category", "id", categoryId));
         List<Post> posts = this.postRepository.findByCategory(category);
-        List<PostDto> postDtos = posts
+        List<PostDto> postsDto = posts
                                     .stream()
                                     .map(post-> this.postToDto(post))
                                     .collect(Collectors.toList());
-        return postDtos;
+        return postsDto;
     }
 
     //To search a post by keyword

@@ -5,8 +5,8 @@ import java.util.List;
 
 public interface UserService {
 
-    //To add a user
-    public UserDto addUser(UserDto userDto);
+    //To create a user
+    public UserDto createUser(UserDto userDto);
 
     //To get all the users
     public List<UserDto> getAllUsers();

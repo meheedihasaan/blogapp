@@ -21,9 +21,9 @@ public class UserServiceImplementation implements UserService {
     @Autowired
     private ModelMapper modelMapper;
 
-    //To add a user
+    //To create a user
     @Override
-    public UserDto addUser(UserDto userDto) {
+    public UserDto createUser(UserDto userDto) {
         User user = this.dtoToUser(userDto);
         User savedUser = this.userRepository.save(user);
 
@@ -31,16 +31,16 @@ public class UserServiceImplementation implements UserService {
     }
 
     
-    //To get all ther users
+    //To get all their users
     @Override
     public List<UserDto> getAllUsers() {
         List<User> users = this.userRepository.findAll();
-        //Convert users to userDtos
-        List<UserDto> userDtos = users
+        //Convert users to usersDto
+        List<UserDto> usersDto = users
                                     .stream()
                                     .map(user->  this.userToDto(user))
                                     .collect(Collectors.toList());
-        return userDtos;
+        return usersDto;
     }
 
     //To get a user by his id
