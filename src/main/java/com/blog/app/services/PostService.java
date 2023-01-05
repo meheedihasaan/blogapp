@@ -1,5 +1,6 @@
 package com.blog.app.services;
 
+import com.blog.app.helper.PostResponse;
 import com.blog.app.payloads.PostDto;
 
 import java.util.List;
@@ -10,7 +11,7 @@ public interface PostService {
     public PostDto createPost(PostDto postDto, int userId, int categoryId);
 
     //To get all the posts
-    public List<PostDto> getAllPosts(int pageNumber, int pageSize);
+    public PostResponse getAllPosts(int pageNumber, int pageSize);
 
     //To get a post by its id
     public PostDto getPostById(int id);
@@ -22,10 +23,10 @@ public interface PostService {
     public void deletePost(int id);
 
     //To get posts by their creator
-    public List<PostDto> getPostsByUser(int userId);
+    public PostResponse getPostsByUser(int userId, int pageNumber, int pageSize);
 
     //To get posts by their category
-    public List<PostDto> getPostByCategory(int categoryId);
+    public PostResponse getPostByCategory(int categoryId, int pageNumber, int pageSize);
 
     //To search a post by keyword
     public List<PostDto> searchPosts(String keyword);

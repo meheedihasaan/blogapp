@@ -4,6 +4,7 @@ import com.blog.app.entities.Category;
 import com.blog.app.entities.Post;
 import com.blog.app.entities.User;
 import com.blog.app.exceptions.ResourceNotFoundException;
+import com.blog.app.helper.PostResponse;
 import com.blog.app.payloads.PostDto;
 import com.blog.app.repositories.CategoryRepository;
 import com.blog.app.repositories.PostRepository;
@@ -53,7 +54,7 @@ public class PostServiceImplementation implements PostService {
 
     //To get all the posts
     @Override
-    public List<PostDto> getAllPosts(int pageNumber, int pageSize) {
+    public PostResponse getAllPosts(int pageNumber, int pageSize) {
         Pageable pageable = PageRequest.of(pageNumber, pageSize);
         Page<Post> page = this.postRepository.findAll(pageable);
         List<Post> posts = page.getContent();
@@ -61,7 +62,15 @@ public class PostServiceImplementation implements PostService {
                                     .stream()
                                     .map(post-> this.postToDto(post))
                                     .collect(Collectors.toList());
-        return postsDto;
+
+        PostResponse postResponse = new PostResponse();
+        postResponse.setPostsDto(postsDto);
+        postResponse.setPageNumber(page.getNumber());
+        postResponse.setPageSize(page.getSize());
+        postResponse.setTotalPost((int) page.getTotalElements());
+        postResponse.setTotalPage(page.getTotalPages());
+        postResponse.setLastPage(page.isLast());
+        return postResponse;
     }
 
     //To get a post by its id
@@ -93,26 +102,46 @@ public class PostServiceImplementation implements PostService {
 
     //To get posts by their creator
     @Override
-    public List<PostDto> getPostsByUser(int userId) {
+    public PostResponse getPostsByUser(int userId, int pageNumber, int pageSize) {
         User user = this.userRepository.findById(userId).orElseThrow(()-> new ResourceNotFoundException("User", "id", userId));
-        List<Post> posts = this.postRepository.findByUser(user);
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+        Page page = this.postRepository.findByCreator(user, pageable);
+        List<Post> posts = page.getContent();
         List<PostDto> postsDto = posts
                                     .stream()
                                     .map(post-> this.postToDto(post))
                                     .collect(Collectors.toList());
-        return postsDto;
+
+        PostResponse postResponse = new PostResponse();
+        postResponse.setPostsDto(postsDto);
+        postResponse.setPageNumber(page.getNumber());
+        postResponse.setPageSize(page.getSize());
+        postResponse.setTotalPost((int)page.getTotalElements());
+        postResponse.setTotalPage(page.getTotalPages());
+        postResponse.setLastPage(page.isLast());
+        return postResponse;
     }
 
     //To get posts by their category
     @Override
-    public List<PostDto> getPostByCategory(int categoryId) {
+    public PostResponse getPostByCategory(int categoryId, int pageNumber, int pageSize) {
         Category category = this.categoryRepository.findById(categoryId).orElseThrow(()-> new ResourceNotFoundException("Category", "id", categoryId));
-        List<Post> posts = this.postRepository.findByCategory(category);
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+        Page page = this.postRepository.findByCategory(category, pageable);
+        List<Post> posts = page.getContent();
         List<PostDto> postsDto = posts
                                     .stream()
                                     .map(post-> this.postToDto(post))
                                     .collect(Collectors.toList());
-        return postsDto;
+
+        PostResponse postResponse = new PostResponse();
+        postResponse.setPostsDto(postsDto);
+        postResponse.setPageNumber(page.getNumber());
+        postResponse.setPageSize(page.getSize());
+        postResponse.setTotalPost((int)page.getTotalElements());
+        postResponse.setTotalPage(page.getTotalPages());
+        postResponse.setLastPage(page.isLast());
+        return postResponse;
     }
 
     //To search a post by keyword
