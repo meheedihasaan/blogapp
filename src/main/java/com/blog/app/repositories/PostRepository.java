@@ -14,7 +14,7 @@ import java.util.List;
 public interface PostRepository extends JpaRepository<Post, Integer> {
 
     //Custom finder method
-    Page findByCreator(User user, Pageable pageable);
+    Page findByUser(User user, Pageable pageable);
 
     //Custom Finder Method
     Page findByCategory(Category category, Pageable pageable);

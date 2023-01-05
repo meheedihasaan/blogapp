@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -54,8 +55,18 @@ public class PostServiceImplementation implements PostService {
 
     //To get all the posts
     @Override
-    public PostResponse getAllPosts(int pageNumber, int pageSize) {
-        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+    public PostResponse getAllPosts(int pageNumber, int pageSize, String sortBy, String sortDirection) {
+        //To sort
+        Sort sort = null;
+        if(sortDirection.equalsIgnoreCase("asc")){
+            sort = Sort.by(sortBy).ascending();
+        }
+        else if(sortDirection.equalsIgnoreCase("desc")){
+            sort = Sort.by(sortBy).descending();
+        }
+
+        //For pagination
+        Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
         Page<Post> page = this.postRepository.findAll(pageable);
         List<Post> posts = page.getContent();
         List<PostDto> postsDto = posts
@@ -105,7 +116,7 @@ public class PostServiceImplementation implements PostService {
     public PostResponse getPostsByUser(int userId, int pageNumber, int pageSize) {
         User user = this.userRepository.findById(userId).orElseThrow(()-> new ResourceNotFoundException("User", "id", userId));
         Pageable pageable = PageRequest.of(pageNumber, pageSize);
-        Page page = this.postRepository.findByCreator(user, pageable);
+        Page page = this.postRepository.findByUser(user, pageable);
         List<Post> posts = page.getContent();
         List<PostDto> postsDto = posts
                                     .stream()
