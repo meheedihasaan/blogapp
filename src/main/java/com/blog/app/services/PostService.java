@@ -23,13 +23,13 @@ public interface PostService {
     public void deletePost(int id);
 
     //To get posts by their creator
-    public PostResponse getPostsByUser(int userId, int pageNumber, int pageSize);
+    public PostResponse getPostsByUser(int userId, int pageNumber, int pageSize, String sortBy, String sortDirection);
 
     //To get posts by their category
-    public PostResponse getPostByCategory(int categoryId, int pageNumber, int pageSize);
+    public PostResponse getPostByCategory(int categoryId, int pageNumber, int pageSize, String sortBy, String sortDirection);
 
     //To search a post by keyword
-    public List<PostDto> searchPosts(String keyword);
+    public PostResponse searchPosts(String keyword, int pageNumber, int pageSize);
 
 
 }

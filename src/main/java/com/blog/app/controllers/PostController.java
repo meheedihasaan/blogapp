@@ -63,9 +63,11 @@ public class PostController {
     public ResponseEntity<PostResponse> getPostsByUser(
             @PathVariable int userId,
             @RequestParam(value = "pageNumber", defaultValue = "0", required = false) int pageNumber,
-            @RequestParam(value = "pageSize", defaultValue = "2", required = false) int pageSize
+            @RequestParam(value = "pageSize", defaultValue = "2", required = false) int pageSize,
+            @RequestParam(value = "sortBy", defaultValue = "id", required = false) String sortBy,
+            @RequestParam(value = "sortDirection", defaultValue = "asc", required = false) String sortDirection
     ){
-        PostResponse postResponse = this.postService.getPostsByUser(userId, pageNumber, pageSize);
+        PostResponse postResponse = this.postService.getPostsByUser(userId, pageNumber, pageSize, sortBy, sortDirection);
         return new ResponseEntity<>(postResponse, HttpStatus.OK);
     }
 
@@ -74,9 +76,22 @@ public class PostController {
     public ResponseEntity<PostResponse> getPostByCategory(
             @PathVariable int categoryId,
             @RequestParam(value = "pageNumber", defaultValue = "0", required = false) int pageNumber,
+            @RequestParam(value = "pageSize", defaultValue = "2", required = false) int pageSize,
+            @RequestParam(value = "sortBy", defaultValue = "id", required = false) String sortBy,
+            @RequestParam(value = "sortDirection", defaultValue = "asc", required = false) String sortDirection
+    ){
+        PostResponse postResponse = this.postService.getPostByCategory(categoryId, pageNumber, pageSize, sortBy, sortDirection);
+        return new ResponseEntity<>(postResponse, HttpStatus.OK);
+    }
+
+    //To search posts by title
+    @GetMapping("/posts/search/{keyword}")
+    public ResponseEntity<PostResponse> searchPosts(
+            @PathVariable String keyword,
+            @RequestParam(value = "pageNumber", defaultValue = "0", required = false) int pageNumber,
             @RequestParam(value = "pageSize", defaultValue = "2", required = false) int pageSize
     ){
-        PostResponse postResponse = this.postService.getPostByCategory(categoryId, pageNumber, pageSize);
+        PostResponse postResponse = this.postService.searchPosts(keyword, pageNumber, pageSize);
         return new ResponseEntity<>(postResponse, HttpStatus.OK);
     }
 

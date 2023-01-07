@@ -113,9 +113,20 @@ public class PostServiceImplementation implements PostService {
 
     //To get posts by their creator
     @Override
-    public PostResponse getPostsByUser(int userId, int pageNumber, int pageSize) {
+    public PostResponse getPostsByUser(int userId, int pageNumber, int pageSize, String sortBy, String sortDirection) {
         User user = this.userRepository.findById(userId).orElseThrow(()-> new ResourceNotFoundException("User", "id", userId));
-        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+
+        //To sort
+        Sort sort = null;
+        if(sortDirection.equalsIgnoreCase("asc")){
+            sort = Sort.by(sortBy).ascending();
+        }
+        else if(sortDirection.equalsIgnoreCase("desc")){
+            sort = Sort.by(sortBy).descending();
+        }
+
+        //For Pagination
+        Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
         Page page = this.postRepository.findByUser(user, pageable);
         List<Post> posts = page.getContent();
         List<PostDto> postsDto = posts
@@ -135,9 +146,20 @@ public class PostServiceImplementation implements PostService {
 
     //To get posts by their category
     @Override
-    public PostResponse getPostByCategory(int categoryId, int pageNumber, int pageSize) {
+    public PostResponse getPostByCategory(int categoryId, int pageNumber, int pageSize, String sortBy, String sortDirection) {
         Category category = this.categoryRepository.findById(categoryId).orElseThrow(()-> new ResourceNotFoundException("Category", "id", categoryId));
-        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+
+        //To sort
+        Sort sort = null;
+        if(sortDirection.equalsIgnoreCase("asc")){
+            sort = Sort.by(sortBy).ascending();
+        }
+        else if(sortDirection.equalsIgnoreCase("desc")){
+            sort = Sort.by(sortBy).descending();
+        }
+
+        //For pagination
+        Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
         Page page = this.postRepository.findByCategory(category, pageable);
         List<Post> posts = page.getContent();
         List<PostDto> postsDto = posts
@@ -157,8 +179,23 @@ public class PostServiceImplementation implements PostService {
 
     //To search a post by keyword
     @Override
-    public List<PostDto> searchPosts(String keyword) {
-        return null;
+    public PostResponse searchPosts(String keyword, int pageNumber, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+        Page page = this.postRepository.searchByTitleContaining(keyword, pageable);
+        List<Post> posts = page.getContent();
+        List<PostDto> postsDto = posts
+                                    .stream()
+                                    .map((post)-> this.postToDto(post))
+                                    .collect(Collectors.toList());
+
+        PostResponse postResponse = new PostResponse();
+        postResponse.setPostsDto(postsDto);
+        postResponse.setPageNumber(page.getNumber());
+        postResponse.setPageSize(page.getSize());
+        postResponse.setTotalPost((int)page.getTotalElements());
+        postResponse.setTotalPage(page.getTotalPages());
+        postResponse.setLastPage(page.isLast());
+        return postResponse;
     }
 
     //To convert PostDto to Post
