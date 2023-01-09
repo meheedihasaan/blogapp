@@ -2,7 +2,9 @@ package com.blog.app.payloads;
 
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -22,5 +24,7 @@ public class PostDto {
     private UserDto user;
 
     private CategoryDto category;
+
+    private List<CommentDto> comments = new ArrayList<>();
 
 }

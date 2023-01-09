@@ -42,8 +42,8 @@ public class FileController {
 
     //To serve post image
     @GetMapping(value = "/downloadImage/{imageName}", produces = MediaType.IMAGE_JPEG_VALUE)
-    public void downloadImage(@PathVariable String imageName, HttpServletResponse response) throws IOException {
-        InputStream resource = this.fileService.getResource(path, imageName);
+    public void serveImage(@PathVariable String imageName, HttpServletResponse response) throws IOException {
+        InputStream resource = this.fileService.serveImage(path, imageName);
         response.setContentType(MediaType.IMAGE_JPEG_VALUE);
         StreamUtils.copy(resource, response.getOutputStream());
     }

@@ -33,7 +33,7 @@ public class FileServiceImplementation implements FileService {
 
     //To serve post image
     @Override
-    public InputStream getResource(String path, String imageName) throws FileNotFoundException {
+    public InputStream serveImage(String path, String imageName) throws FileNotFoundException {
         String fullPath = path + File.separator + imageName;
         InputStream inputStream = new FileInputStream(fullPath);
         return inputStream;
