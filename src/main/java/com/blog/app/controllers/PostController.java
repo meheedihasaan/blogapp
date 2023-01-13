@@ -4,17 +4,12 @@ import com.blog.app.configs.AppConstants;
 import com.blog.app.helper.ApiResponse;
 import com.blog.app.helper.PostResponse;
 import com.blog.app.payloads.PostDto;
-import com.blog.app.services.FileService;
 import com.blog.app.services.PostService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
-import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -25,7 +20,7 @@ public class PostController {
 
     //To create a post
     @PostMapping("/user/{userId}/category/{categoryId}/create")
-    public ResponseEntity<PostDto> createPost(@RequestBody PostDto postDto, @PathVariable int userId, @PathVariable int categoryId){
+    public ResponseEntity<PostDto> createPost(@Valid @RequestBody PostDto postDto, @PathVariable int userId, @PathVariable int categoryId){
         PostDto savedPostDto = this.postService.createPost(postDto, userId, categoryId);
         return new ResponseEntity<>(savedPostDto, HttpStatus.CREATED);
     }
@@ -51,7 +46,7 @@ public class PostController {
 
     //To update a post
     @PutMapping("/posts/{id}/update")
-    public ResponseEntity<PostDto> updatePost(@RequestBody PostDto postDto, @PathVariable int id){
+    public ResponseEntity<PostDto> updatePost(@Valid @RequestBody PostDto postDto, @PathVariable int id){
         PostDto updatedPostDto = this.postService.updatePost(postDto, id);
         return new ResponseEntity<>(updatedPostDto, HttpStatus.OK);
     }
