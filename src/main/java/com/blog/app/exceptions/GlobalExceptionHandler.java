@@ -19,10 +19,10 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ApiResponse> ResourceNotFoundExceptionHandler(ResourceNotFoundException ex){
         String message = ex.getMessage();
         ApiResponse response = new ApiResponse(message, false);
-        return new ResponseEntity<ApiResponse>(response, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 
-    //This method will handle all the Validation related exception
+    //This method will handle all the Validation related Exception
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, String>> MethodArgumentNotValidExceptionHandler(MethodArgumentNotValidException ex){
         Map<String, String> response = new HashMap<>();
@@ -31,7 +31,15 @@ public class GlobalExceptionHandler {
             String message = error.getDefaultMessage();
             response.put(fieldName, message);
         });
-        return new ResponseEntity<Map<String, String>>(response, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+    //This method will handle all the Bad Credentials Exception when username or password is wrong
+    @ExceptionHandler(InvalidUsernameOrPasswordException.class)
+    public ResponseEntity<ApiResponse> UsernameNotFoundExceptionHandler(InvalidUsernameOrPasswordException ex) {
+        String message = ex.getMessage();
+        ApiResponse response = new ApiResponse(message, false);
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 
 }
