@@ -1,6 +1,8 @@
 package com.blog.app.payloads;
 
 import com.blog.app.entities.Post;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
@@ -27,9 +29,12 @@ public class UserDto {
 
     @NotEmpty
     @Size(min = 4, max = 32, message = "Password must be between 4 to 32 characters.")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
     @Size(min = 0, max = 10000, message = "Description must contain less than or equal 10000 characters.")
     private String description;
+
+    List<RoleDto> roles = new ArrayList<>();
 
 }

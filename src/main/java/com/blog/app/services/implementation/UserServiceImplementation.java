@@ -1,12 +1,16 @@
 package com.blog.app.services.implementation;
 
+import com.blog.app.configs.AppConstants;
+import com.blog.app.entities.Role;
 import com.blog.app.entities.User;
 import com.blog.app.exceptions.ResourceNotFoundException;
 import com.blog.app.payloads.UserDto;
+import com.blog.app.repositories.RoleRepository;
 import com.blog.app.repositories.UserRepository;
 import com.blog.app.services.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,6 +24,12 @@ public class UserServiceImplementation implements UserService {
 
     @Autowired
     private ModelMapper modelMapper;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private RoleRepository roleRepository;
 
     //To create a user
     @Override
@@ -68,6 +78,17 @@ public class UserServiceImplementation implements UserService {
     public void deleteUser(int id) {
         User user = this.userRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("User", "id", id));
         userRepository.delete(user);
+    }
+
+    @Override
+    public UserDto registerUser(UserDto userDto) {
+        User user = this.dtoToUser(userDto);
+        user.setPassword(this.passwordEncoder.encode(user.getPassword()));
+        Role role = this.roleRepository.findById(AppConstants.NORMAL_USER).get();
+        user.getRoles().add(role);
+        this.userRepository.save(user);
+
+        return this.userToDto(user);
     }
 
     //To convert UserDto to User

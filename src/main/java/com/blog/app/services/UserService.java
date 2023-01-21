@@ -20,4 +20,7 @@ public interface UserService {
     //To delete a user by his id
     public void deleteUser(int id);
 
+    //To register a user
+    public UserDto registerUser(UserDto userDto);
+
 }
