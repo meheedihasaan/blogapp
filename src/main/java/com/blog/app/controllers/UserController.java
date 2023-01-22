@@ -3,6 +3,8 @@ package com.blog.app.controllers;
 import com.blog.app.helper.ApiResponse;
 import com.blog.app.payloads.UserDto;
 import com.blog.app.services.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
