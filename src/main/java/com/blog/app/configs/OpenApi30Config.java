@@ -22,16 +22,10 @@ import org.springframework.context.annotation.Configuration;
                         email = "mehedihasan111941@gmail.com",
                         url = "https://github.com/meheedihasaan"
                 ),
-                license = @License(
-                        name = "N/A"
-                ),
-                termsOfService = "N/A",
                 description = "This project is developed by Md Mehedi Hasan"
         ),
         servers = @Server(
-                url = "https://community.render.com/",
-                description
-                        = "Local Server"
+                url = "https://blogapp.up.railway.app"
         )
 )
 public class OpenApi30Config {
