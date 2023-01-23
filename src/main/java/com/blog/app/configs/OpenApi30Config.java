@@ -29,7 +29,7 @@ import org.springframework.context.annotation.Configuration;
                 description = "This project is developed by Md Mehedi Hasan"
         ),
         servers = @Server(
-                url = "http://localhost:8080",
+                url = "https://community.render.com/",
                 description
                         = "Local Server"
         )
