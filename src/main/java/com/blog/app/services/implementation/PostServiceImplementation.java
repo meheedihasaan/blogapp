@@ -98,7 +98,6 @@ public class PostServiceImplementation implements PostService {
         post.setTitle(postDto.getTitle());
         post.setContent(postDto.getContent());
         post.setImageUrl(postDto.getImageUrl());
-        post.setCategory(this.modelMapper.map(postDto.getCategory(), Category.class)); //Convert CategoryDto to Category
 
         Post updatedPost = this.postRepository.save(post);
         return this.postToDto(updatedPost);
