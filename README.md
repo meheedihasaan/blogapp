@@ -7,7 +7,7 @@ Here are the backend APIs of a Blog Application. There two kinds of user - Admin
 * Programming Language: Java 17
 * Spring Boot: 3.0.1
 * Build Tool: Maven
-* Database: MySQL
+* Database: PostgreSQL
 
 ## Features & Services
 * User Registration and Login
@@ -21,6 +21,6 @@ Here are the backend APIs of a Blog Application. There two kinds of user - Admin
 * API Documentation with Open API-3 (Swagger UI)
 
 ## User Manual
-Go to the Live Link which I provided above. You'll get a fantastic UI provided by Swagger. You can test the APIs there. Before doing registration, you are just a guest and so you can access only GET APIs. After that, please register with your email, password and description to create post. Now, do login with authentic username and password to access other APIs. Remember, your email is your username. After a successful authentication, you can create category, post and manage them. One more thing is as a normal registerd user, you can not access the DELETE APIs. Thank You.  
+Go to the Live Link which I provided above. You'll get a fantastic UI provided by Swagger. You can test the APIs there. Before doing registration, you are just a guest and so you can access only GET APIs. After that, please register with your email, password and description to create post. Now, do login with authentic username and password to access other APIs. You can also do comments on other posts. Remember, your email is your username. After a successful authentication, you can create category, post and manage them. One more thing is as a normal registerd user, you can not access the DELETE APIs. Thank You.  
 
 
