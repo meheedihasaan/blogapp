@@ -9,7 +9,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
+//import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -34,8 +34,8 @@ public class PostController {
             @RequestParam(value = "sortBy", defaultValue = AppConstants.SORT_BY, required = false) String sortBy,
             @RequestParam(value = "sortDirection", defaultValue = AppConstants.SORT_DIRECTION, required = false) String sortDirection
     ){
-        PostResponse postResponse = this.postService.getAllPosts(pageNumber, pageSize, sortBy, sortDirection);
-        return new ResponseEntity<>(postResponse, HttpStatus.OK);
+        //PostResponse postResponse = this.postService.getAllPosts(pageNumber, pageSize, sortBy, sortDirection);
+        return new ResponseEntity<>(null, HttpStatus.OK);
     }
 
     //To get a post by its id
@@ -53,7 +53,7 @@ public class PostController {
     }
 
     //To delete a post
-    @PreAuthorize("hasRole('ADMIN')")
+    //@PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/posts/{id}/delete")
     public ResponseEntity<ApiResponse> deletePost(@PathVariable int id){
         this.postService.deletePost(id);

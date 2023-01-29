@@ -55,7 +55,7 @@ public class PostServiceImplementation implements PostService {
 
     //To get all the posts
     @Override
-    public PostResponse getAllPosts(int pageNumber, int pageSize, String sortBy, String sortDirection) {
+    public Page getAllPosts(int pageNumber, int pageSize, String sortBy, String sortDirection) {
         //To sort
         Sort sort = null;
         if(sortDirection.equalsIgnoreCase("asc")){
@@ -68,20 +68,7 @@ public class PostServiceImplementation implements PostService {
         //For pagination
         Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
         Page<Post> page = this.postRepository.findAll(pageable);
-        List<Post> posts = page.getContent();
-        List<PostDto> postsDto = posts
-                                    .stream()
-                                    .map(post-> this.postToDto(post))
-                                    .collect(Collectors.toList());
-
-        PostResponse postResponse = new PostResponse();
-        postResponse.setPostsDto(postsDto);
-        postResponse.setPageNumber(page.getNumber());
-        postResponse.setPageSize(page.getSize());
-        postResponse.setTotalPost((int) page.getTotalElements());
-        postResponse.setTotalPage(page.getTotalPages());
-        postResponse.setLastPage(page.isLast());
-        return postResponse;
+        return page;
     }
 
     //To get a post by its id
