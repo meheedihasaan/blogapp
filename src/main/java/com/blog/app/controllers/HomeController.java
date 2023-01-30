@@ -66,7 +66,7 @@ public class HomeController {
     @GetMapping("/categories/{id}/{title}")
     public String viewCategory(@PathVariable int id, Model model) {
         CategoryDto category = this.categoryService.getCategoryByID(id);
-        model.addAttribute("title", category.getTitle());
+        model.addAttribute("title", "Mini Blog - "+category.getTitle());
         model.addAttribute("category", category);
 
         return "blog-template/single-category";
