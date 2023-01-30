@@ -18,8 +18,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -182,6 +181,28 @@ public class PostServiceImplementation implements PostService {
         postResponse.setTotalPage(page.getTotalPages());
         postResponse.setLastPage(page.isLast());
         return postResponse;
+    }
+
+    //To get featured posts
+    @Override
+    public List<PostDto> getFeaturedPost() {
+        List<Post> allPosts = this.postRepository.findAll();
+        List<PostDto> allPostsDto = allPosts
+                                    .stream()
+                                    .map((post)-> this.postToDto(post))
+                                    .collect(Collectors.toList());
+
+        List<PostDto> featuredPosts = new ArrayList<>();
+        Set<Integer> set = new HashSet<>();
+        Random random = new Random();
+        while (set.size() < 4) {
+            set.add(random.nextInt(allPosts.size()));
+        }
+
+        for (int i : set) {
+            featuredPosts.add(allPostsDto.get(i));
+        }
+        return featuredPosts;
     }
 
     //To convert PostDto to Post

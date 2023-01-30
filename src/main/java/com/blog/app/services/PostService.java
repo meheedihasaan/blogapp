@@ -1,5 +1,6 @@
 package com.blog.app.services;
 
+import com.blog.app.entities.Post;
 import com.blog.app.helper.PostResponse;
 import com.blog.app.payloads.PostDto;
 import org.springframework.data.domain.Page;
@@ -32,5 +33,6 @@ public interface PostService {
     //To search a post by keyword
     public PostResponse searchPosts(String keyword, int pageNumber, int pageSize);
 
-
+    //To get featured posts
+    List<PostDto> getFeaturedPost();
 }
