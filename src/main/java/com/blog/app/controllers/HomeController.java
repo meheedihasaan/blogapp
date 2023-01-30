@@ -1,7 +1,9 @@
 package com.blog.app.controllers;
 
 import com.blog.app.entities.Post;
+import com.blog.app.payloads.CategoryDto;
 import com.blog.app.payloads.PostDto;
+import com.blog.app.services.CategoryService;
 import com.blog.app.services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,9 +22,23 @@ public class HomeController {
     @Autowired
     private PostService postService;
 
+    @Autowired
+    private CategoryService categoryService;
+
+    @GetMapping
+    public String home(Model model) {
+        model.addAttribute("title", "Mini Blog");
+
+        //Banner Posts
+        List<PostDto> bannerPosts = this.postService.getBannerPosts();
+        model.addAttribute("bannerPosts", bannerPosts);
+
+        return "blog-template/index";
+    }
+
     @GetMapping("/posts/{page}")
     public String getAllPosts(@PathVariable int page, Model model) {
-        model.addAttribute("title", "Posts");
+        model.addAttribute("title", "Mini Blog - Posts");
 
         //All Posts
         Page<Post> posts = this.postService.getAllPosts(page, 3, "date", "desc");
@@ -35,6 +51,25 @@ public class HomeController {
         model.addAttribute("featuredPosts", featuredPosts);
 
         return "blog-template/posts";
+    }
+
+    @GetMapping("/categories")
+    public String viewAllCategories(Model model) {
+        model.addAttribute("title", "Mini Blog - Categories");
+
+        List<CategoryDto> categories = this.categoryService.getAllCategories();
+        model.addAttribute("categories", categories);
+
+        return "blog-template/categories";
+    }
+
+    @GetMapping("/categories/{id}/{title}")
+    public String viewCategory(@PathVariable int id, Model model) {
+        CategoryDto category = this.categoryService.getCategoryByID(id);
+        model.addAttribute("title", category.getTitle());
+        model.addAttribute("category", category);
+
+        return "blog-template/single-category";
     }
 
 

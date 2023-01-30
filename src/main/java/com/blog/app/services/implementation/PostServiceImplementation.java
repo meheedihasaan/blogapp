@@ -186,23 +186,45 @@ public class PostServiceImplementation implements PostService {
     //To get featured posts
     @Override
     public List<PostDto> getFeaturedPost() {
-        List<Post> allPosts = this.postRepository.findAll();
-        List<PostDto> allPostsDto = allPosts
-                                    .stream()
-                                    .map((post)-> this.postToDto(post))
-                                    .collect(Collectors.toList());
+        List<Post> posts = this.postRepository.findAll();
+        List<PostDto> postsDto = posts
+                                .stream()
+                                .map((post)-> this.postToDto(post))
+                                .collect(Collectors.toList());
 
         List<PostDto> featuredPosts = new ArrayList<>();
         Set<Integer> set = new HashSet<>();
         Random random = new Random();
         while (set.size() < 4) {
-            set.add(random.nextInt(allPosts.size()));
+            set.add(random.nextInt(posts.size()));
         }
 
         for (int i : set) {
-            featuredPosts.add(allPostsDto.get(i));
+            featuredPosts.add(postsDto.get(i));
         }
         return featuredPosts;
+    }
+
+    //To get banner posts for home
+    @Override
+    public List<PostDto> getBannerPosts() {
+        List<Post> posts = this.postRepository.findAll();
+        List<PostDto> postsDto = posts
+                                .stream()
+                                .map((post)-> this.postToDto(post))
+                                .collect(Collectors.toList());
+
+        List<PostDto> bannerPosts = new ArrayList<>();
+        Set<Integer> set = new HashSet<>();
+        Random random = new Random();
+        while (set.size() < 5) {
+            set.add(random.nextInt(posts.size()));
+        }
+
+        for (int i : set) {
+            bannerPosts.add(postsDto.get(i));
+        }
+        return bannerPosts;
     }
 
     //To convert PostDto to Post

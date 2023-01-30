@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:replace="blog-template/base::layout(~{:: .main-content})">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <section class="main-content">
+        <div class="py-5 bg-light">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <span class="badge badge-primary">Category</span>
+                        <h3 th:text="${category.getTitle()}"></h3>
+                        <p th:text="${category.getDescription()}"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

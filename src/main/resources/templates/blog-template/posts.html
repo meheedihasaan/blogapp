@@ -1,209 +1,114 @@
- <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <title th:text="${title}">Mini Blog</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <link href="https://fonts.googleapis.com/css?family=Muli:300,400,700|Playfair+Display:400,700,900" rel="stylesheet">
-
-    <link rel="stylesheet" th:href="@{/blog-resources/fonts/icomoon/style.css}">
-    <link rel="stylesheet" th:href="@{/blog-resources/css/bootstrap.min.css}">
-    <link rel="stylesheet" th:href="@{/blog-resources/css/magnific-popup.css}">
-    <link rel="stylesheet" th:href="@{/blog-resources/css/jquery-ui.css}">
-    <link rel="stylesheet" th:href="@{/blog-resources/css/owl.carousel.min.css}">
-    <link rel="stylesheet" th:href="@{/blog-resources/css/owl.theme.default.min.css}">
-    <link rel="stylesheet" th:href="@{/blog-resources/css/bootstrap-datepicker.css}">
-    <link rel="stylesheet" th:href="@{/blog-resources/fonts/flaticon/font/flaticon.css}">
-    <link rel="stylesheet" th:href="@{/blog-resources/css/aos.css}">
-
-    <link rel="stylesheet" th:href="@{/blog-resources/css/style.css}">
-  </head>
-  <body>
-      <div class="site-wrap">
-          <!-- Mobile Menu Section Starts -->
-          <div class="site-mobile-menu">
-              <div class="site-mobile-menu-header">
-                  <div class="site-mobile-menu-close mt-3">
-                      <span class="icon-close2 js-menu-toggle"></span>
-                  </div>
-              </div>
-              <div class="site-mobile-menu-body"></div>
-          </div>
-          <!-- Mobile Menu Section Starts -->
-
-          <!-- Header Section Starts -->
-          <header class="site-navbar" role="banner">
-              <div class="container-fluid">
-                  <div class="row align-items-center">
-                      <div class="col-12 search-form-wrap js-search-form">
-                          <form method="get" action="#">
-                              <input type="text" id="s" class="form-control" placeholder="Search...">
-                              <button class="search-btn" type="submit">
-                                  <span class="icon-search"></span>
-                              </button>
-                          </form>
-                      </div>
-
-                      <div class="col-4 site-logo">
-                          <a href="posts.html" class="text-black h2 mb-0">Mini Blog</a>
-                      </div>
-
-                      <div class="col-8 text-right">
-                          <nav class="site-navigation" role="navigation">
-                              <ul class="site-menu js-clone-nav mr-auto d-none d-lg-block mb-0">
-                                  <li><a href="category.html">Home</a></li>
-                                  <li><a href="category.html">Politics</a></li>
-                                  <li><a href="category.html">Tech</a></li>
-                                  <li><a href="category.html">Entertainment</a></li>
-                                  <li><a href="category.html">Travel</a></li>
-                                  <li><a href="category.html">Sports</a></li>
-                                  <li class="d-none d-lg-inline-block"><a href="#" class="js-search-toggle"><span class="icon-search"></span></a></li>
-                              </ul>
-                          </nav>
-                          <a href="#" class="site-menu-toggle js-menu-toggle text-black d-inline-block d-lg-none"><span class="icon-menu h3"></span></a></div>
-                      </div>
-              </div>
-          </header>
-          <!-- Header Section Ends -->
-
-          <!-- Recent Posts Section Starts -->
-          <div class="site-section">
-              <div class="container">
-                  <div class="row mb-5">
-                      <div class="col-12">
-                          <h2>Recent Posts</h2>
-                      </div>
-                  </div>
-                  <div class="row">
-                      <div th:each="post : ${posts}" class="col-lg-4 mb-4">
-                          <div class="entry2">
-                              <a href="single.html"><img src=" " alt="Image" class="img-fluid rounded"></a>
-                              <div class="excerpt">
-                                  <span th:text="${post.getCategory().getTitle()}" class="post-category text-white bg-secondary mb-3"></span>
-                                  <h2>
-                                      <a th:text="${post.getTitle()}" href="single.html"></a>
-                                  </h2>
-                                  <div class="post-meta align-items-center text-left clearfix">
-                                      <p style="margin-bottom: 0px; padding-bottom: 0px">
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:replace="blog-template/base::layout(~{:: .main-content})">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <section class="main-content">
+        <!-- Recent Posts Section Starts -->
+        <div class="site-section">
+            <div class="container">
+                <div class="row mb-5">
+                    <div class="col-12">
+                        <h2>Recent Posts</h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div th:each="post : ${posts}" class="col-lg-4 mb-4">
+                        <div class="entry2">
+                            <a href="single.html"><img src=" " alt="Image" class="img-fluid rounded"></a>
+                            <div class="excerpt">
+                                <span th:text="${post.getCategory().getTitle()}" class="post-category text-white bg-secondary mb-3"></span>
+                                <h2>
+                                    <a th:text="${post.getTitle()}" href="single.html"></a>
+                                </h2>
+                                <div class="post-meta align-items-center text-left clearfix">
+                                    <p style="margin-bottom: 0px; padding-bottom: 0px">
                                         <span th:text="${#dates.format(post.getDate(), 'dd-MMM-yyyy')}"></span>
-                                      </p>
-                                      <p style="font-size: 16px">
-                                          By <b><a th:text="${post.getUser().getName()}" href="#"></a></b>
-                                      </p>
-                                  </div>
+                                    </p>
+                                    <p style="font-size: 16px">
+                                        By <b><a th:text="${post.getUser().getName()}" href="#"></a></b>
+                                    </p>
+                                </div>
 
-                                  <p th:text="${#strings.abbreviate(post.getContent(), 150)+'...'}"></p>
-                                  <p><a href="#">Read More</a></p>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="row text-center pt-5 border-top">
-                      <div class="col-md-12">
-                          <!-- Pagination -->
-                          <nav aria-label="Page navigation example">
-                              <ul class="pagination justify-content-center">
-                                  <li th:if="${currentPage != 0}" class="page-item"><a class="page-link" th:href="@{'/blog/posts/' + ${currentPage - 1}}">Prev</a></li>
-                                  <li th:classappend="${currentPage == page - 1? 'active' : ''}" th:each="page : ${#numbers.sequence(1, totalPages)}" class="page-item"><a class="page-link" th:href="@{'/blog/posts/' + ${page - 1}}"><span th:text="${page}"></span></a></li>
-                                  <li th:if="${currentPage+1 != totalPages}" class="page-item"><a class="page-link" th:href="@{'/blog/posts/' + ${currentPage+1}}">Next</a></li>
-                              </ul>
-                          </nav>
-                      </div>
-                  </div>
-              </div>
-          </div>
-          <!-- Recent Posts Section Ends -->
+                                <p th:text="${#strings.abbreviate(post.getContent(), 150)+'...'}"></p>
+                                <p><a href="#">Read More</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row text-center pt-5 border-top">
+                    <div class="col-md-12">
+                        <!-- Pagination -->
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination justify-content-center">
+                                <li th:if="${currentPage != 0}" class="page-item"><a class="page-link" th:href="@{'/blog/posts/' + ${currentPage - 1}}">Prev</a></li>
+                                <li th:classappend="${currentPage == page - 1? 'active' : ''}" th:each="page : ${#numbers.sequence(1, totalPages)}" class="page-item"><a class="page-link" th:href="@{'/blog/posts/' + ${page - 1}}"><span th:text="${page}"></span></a></li>
+                                <li th:if="${currentPage+1 != totalPages}" class="page-item"><a class="page-link" th:href="@{'/blog/posts/' + ${currentPage+1}}">Next</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Recent Posts Section Ends -->
 
-          <!-- Featured Posts Section Starts -->
-          <div class="site-section bg-light">
-              <div class="container">
-                  <div class="row mb-4">
-                      <div class="col-12">
-                          <h2>Featured Posts</h2>
-                      </div>
-                  </div>
+        <!-- Featured Posts Section Starts -->
+        <div class="site-section bg-light">
+            <div class="container">
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <h2>Featured Posts</h2>
+                    </div>
+                </div>
 
-                  <div class="row align-items-stretch retro-layout">
-                      <div class="col-md-5 order-md-2">
-                          <a href="single.html" class="hentry img-1 h-100 gradient" style="">
-                              <span th:text="${featuredPosts.get(0).getCategory().getTitle()}" class="post-category text-white bg-danger"></span>
-                              <div class="text">
-                                  <h2 th:text="${featuredPosts.get(0).getTitle()}"></h2>
-                                  <span th:text="${#dates.format(featuredPosts.get(0).getDate(), 'dd-MMM-yyyy')}"></span>
-                              </div>
-                          </a>
-                      </div>
+                <div class="row align-items-stretch retro-layout">
+                    <div class="col-md-5 order-md-2">
+                        <a href="single.html" class="hentry img-1 h-100 gradient" style="">
+                            <span th:text="${featuredPosts.get(0).getCategory().getTitle()}" class="post-category text-white bg-danger"></span>
+                            <div class="text">
+                                <h2 th:text="${featuredPosts.get(0).getTitle()}"></h2>
+                                <span th:text="${#dates.format(featuredPosts.get(0).getDate(), 'dd-MMM-yyyy')}"></span>
+                            </div>
+                        </a>
+                    </div>
 
-                      <div class="col-md-7">
-                          <a href="single.html" class="hentry img-2 v-height mb30 gradient" style="">
-                              <span th:text="${featuredPosts.get(1).getCategory().getTitle()}" class="post-category text-white bg-success"></span>
-                              <div class="text text-sm">
-                                  <h2 th:text="${featuredPosts.get(1).getTitle()}"></h2>
-                                  <span th:text="${#dates.format(featuredPosts.get(1).getDate(), 'dd-MMM-yyyy')}"></span>
-                              </div>
-                          </a>
+                    <div class="col-md-7">
+                        <a href="single.html" class="hentry img-2 v-height mb30 gradient" style="">
+                            <span th:text="${featuredPosts.get(1).getCategory().getTitle()}" class="post-category text-white bg-success"></span>
+                            <div class="text text-sm">
+                                <h2 th:text="${featuredPosts.get(1).getTitle()}"></h2>
+                                <span th:text="${#dates.format(featuredPosts.get(1).getDate(), 'dd-MMM-yyyy')}"></span>
+                            </div>
+                        </a>
 
-                          <div class="two-col d-block d-md-flex">
-                              <a href="single.html" class="hentry v-height img-2 gradient" style="">
-                                  <span th:text="${featuredPosts.get(2).getCategory().getTitle()}" class="post-category text-white bg-primary"></span>
-                                  <div class="text text-sm">
-                                      <h2 th:text="${featuredPosts.get(2).getTitle()}"></h2>
-                                      <span th:text="${#dates.format(featuredPosts.get(2).getDate(), 'dd-MMM-yyyy')}"></span>
-                                  </div>
-                              </a>
-                              <a href="single.html" class="hentry v-height img-2 ml-auto gradient" style="">
-                                  <span th:text="${featuredPosts.get(3).getCategory().getTitle()}" class="post-category text-white bg-warning"></span>
-                                  <div class="text text-sm">
-                                      <h2 th:text="${featuredPosts.get(3).getTitle()}"></h2>
-                                      <span th:text="${#dates.format(featuredPosts.get(3).getDate(), 'dd-MMM-yyyy')}"></span>
-                                  </div>
-                              </a>
-                          </div>
+                        <div class="two-col d-block d-md-flex">
+                            <a href="single.html" class="hentry v-height img-2 gradient" style="">
+                                <span th:text="${featuredPosts.get(2).getCategory().getTitle()}" class="post-category text-white bg-primary"></span>
+                                <div class="text text-sm">
+                                    <h2 th:text="${featuredPosts.get(2).getTitle()}"></h2>
+                                    <span th:text="${#dates.format(featuredPosts.get(2).getDate(), 'dd-MMM-yyyy')}"></span>
+                                </div>
+                            </a>
+                            <a href="single.html" class="hentry v-height img-2 ml-auto gradient" style="">
+                                <span th:text="${featuredPosts.get(3).getCategory().getTitle()}" class="post-category text-white bg-warning"></span>
+                                <div class="text text-sm">
+                                    <h2 th:text="${featuredPosts.get(3).getTitle()}"></h2>
+                                    <span th:text="${#dates.format(featuredPosts.get(3).getDate(), 'dd-MMM-yyyy')}"></span>
+                                </div>
+                            </a>
+                        </div>
 
-                      </div>
-                  </div>
+                    </div>
+                </div>
 
-              </div>
-          </div>
-          <!-- Featured Posts Section Ends -->
-
-          <!-- Footer Section Starts -->
-          <div class="site-footer">
-              <div class="container">
-                  <div class="row mb-5">
-                      <div class="col-12 text-center">
-                          <h3 class="footer-heading mb-4">About Us</h3>
-                          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Placeat reprehenderit magnam deleniti quasi saepe, consequatur atque sequi delectus dolore veritatis obcaecati quae, repellat eveniet omnis, voluptatem in. Soluta, eligendi, architecto.</p>
-                      </div>
-                  </div>
-
-                  <div class="row">
-                      <div class="col-12 text-center">
-                          <p>
-                              Copyright &copy; <script>document.write(new Date().getFullYear());</script> All rights reserved | This site is developed by <a href="https://www.github.com/meheedihasaan" target="_blank" >Mehedi Hasan</a>
-                          </p>
-                      </div>
-                  </div>
-              </div>
-          </div>
-          <!-- Footer Section Ends -->
-      </div>
-
-  <script th:src="@{/blog-resources/js/jquery-3.3.1.min.js}"></script>
-  <script th:src="@{/blog-resources/js/jquery-migrate-3.0.1.min.js}"></script>
-  <script th:src="@{/blog-resources/js/jquery-ui.js}"></script>
-  <script th:src="@{/blog-resources/js/popper.min.js}"></script>
-  <script th:src="@{/blog-resources/js/bootstrap.min.js}"></script>
-  <script th:src="@{/blog-resources/js/owl.carousel.min.js}"></script>
-  <script th:src="@{/blog-resources/js/jquery.stellar.min.js}"></script>
-  <script th:src="@{/blog-resources/js/jquery.countdown.min.js}"></script>
-  <script th:src="@{/blog-resources/js/jquery.magnific-popup.min.js}"></script>
-  <script th:src="@{/blog-resources/js/bootstrap-datepicker.min.js}"></script>
-  <script th:src="@{/blog-resources/js/aos.js}"></script>
-
-  <script th:src="@{/blog-resources/js/main.js}"></script>
-
-
-  </body>
+            </div>
+        </div>
+        <!-- Featured Posts Section Ends -->
+    </section>
+</body>
 </html>

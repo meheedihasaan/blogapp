@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:replace="blog-template/base::layout(~{:: .main-content})">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <section class="main-content">
+        <div class="site-section bg-light">
+            <div class="container">
+                <div class="row">
+                    <div th:each="category : ${categories}" class="col-md-6">
+                        <div class="card p-3 m-2">
+                            <div class="card-body">
+                                <h2 th:text="${category.getTitle()}"></h2>
+                                <p th:text="${category.getDescription()}"></p>
+                                <a class="btn btn-primary btn-sm" th:href="@{/blog/categories/{id}/{title}(id=${category.getId()}, title=${category.getTitle()})}">View Posts</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

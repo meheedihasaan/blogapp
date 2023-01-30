@@ -35,4 +35,8 @@ public interface PostService {
 
     //To get featured posts
     List<PostDto> getFeaturedPost();
+
+    //To get banner posts for home
+    List<PostDto> getBannerPosts();
+
 }
