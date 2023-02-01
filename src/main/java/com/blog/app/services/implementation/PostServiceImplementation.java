@@ -186,7 +186,7 @@ public class PostServiceImplementation implements PostService {
         Set<Integer> set = new HashSet<>();
         Random random = new Random();
         while (set.size() < 5) {
-            set.add(random.nextInt(posts.size()));
+            set.add(random.nextInt(postsDto.size()));
         }
 
         for (int i : set) {
@@ -208,13 +208,42 @@ public class PostServiceImplementation implements PostService {
         Set<Integer> set = new HashSet<>();
         Random random = new Random();
         while (set.size() < 4) {
-            set.add(random.nextInt(posts.size()));
+            set.add(random.nextInt(postsDto.size()));
         }
 
         for (int i : set) {
             featuredPosts.add(postsDto.get(i));
         }
         return featuredPosts;
+    }
+
+    //To get related posts
+    @Override
+    public List<PostDto> getRelatedPosts(int postId, int categoryId) {
+        Post currentPost = this.postRepository.findById(postId).orElseThrow(()-> new ResourceNotFoundException("Post", "id", postId));
+        Category category = this.categoryRepository.findById(categoryId).orElseThrow(()-> new ResourceNotFoundException("Category", "id", categoryId));
+        List<Post> posts = this.postRepository.findByCategory(category);
+        posts.remove(currentPost);
+        List<PostDto> postsDto = posts
+                .stream()
+                .map((post)-> this.postToDto(post))
+                .collect(Collectors.toList());
+
+        if(postsDto.size() <= 4) {
+            return postsDto;
+        }
+
+        List<PostDto> relatedPosts = new ArrayList<>();
+        Set<Integer> set = new HashSet<>();
+        Random random = new Random();
+        while (set.size() < 4) {
+            set.add(random.nextInt(postsDto.size()));
+        }
+
+        for (int i : set) {
+            relatedPosts.add(postsDto.get(i));
+        }
+        return relatedPosts;
     }
 
     //To convert PostDto to Post

@@ -57,6 +57,7 @@ public class HomeController {
     public String viewAllCategories(Model model) {
         model.addAttribute("title", "Mini Blog - Categories");
 
+        //All Categories
         List<CategoryDto> categories = this.categoryService.getAllCategories();
         model.addAttribute("categories", categories);
 
@@ -65,10 +66,12 @@ public class HomeController {
 
     @GetMapping("/categories/{id}/{title}/{page}")
     public String viewCategory(@PathVariable int id, @PathVariable int page, Model model) {
+        //Single Category
         CategoryDto category = this.categoryService.getCategoryByID(id);
         model.addAttribute("title", "Mini Blog - "+category.getTitle());
         model.addAttribute("category", category);
 
+        //Category Posts
         Page<PostDto> postDtoPage = this.postService.getPostByCategory(id, page, 3, "date", "desc");
         model.addAttribute("postDtoPage", postDtoPage);
         model.addAttribute("currentPage", page);
@@ -81,8 +84,15 @@ public class HomeController {
     public String viewSiglePost(@PathVariable int id, Model model) {
         model.addAttribute("title", "Min Blog - Read Post");
 
+        //Single Post
         PostDto post = this.postService.getPostById(id);
         model.addAttribute("post", post);
+
+        //Related Posts
+        int postId = post.getId();
+        int categoryId = post.getCategory().getId();
+        List<PostDto> relatedPosts = this.postService.getRelatedPosts(postId, categoryId);
+        model.addAttribute("relatedPosts", relatedPosts);
 
         return "blog-template/single-post";
     }

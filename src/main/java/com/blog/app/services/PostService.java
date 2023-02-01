@@ -1,5 +1,6 @@
 package com.blog.app.services;
 
+import com.blog.app.entities.Category;
 import com.blog.app.entities.Post;
 import com.blog.app.helper.PostResponse;
 import com.blog.app.payloads.PostDto;
@@ -38,5 +39,7 @@ public interface PostService {
 
     //To get featured posts
     List<PostDto> getFeaturedPost();
+
+    List<PostDto> getRelatedPosts(int postId, int categoryId);
 
 }

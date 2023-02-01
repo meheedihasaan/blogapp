@@ -46,6 +46,31 @@
             </div>
         </section>
         <!-- Post Body Section Ends -->
+
+        <!-- Related Posts Section Starts -->
+        <div class="site-section bg-light">
+            <div class="container">
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <h2>More Related Posts</h2>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div th:each="post : ${relatedPosts}" class="col-md-6 mb-3">
+                        <a th:href="@{/blog/posts/{id}/{title} (id = ${post.getId()}, title = ${post.getTitle()}) }" class="hentry img-1 h-100 gradient" style="">
+                            <span th:text="${post.getCategory().getTitle()}" class="post-category text-white bg-danger"></span>
+                            <div class="text">
+                                <h4 th:text="${post
+                                .getTitle()}"></h4>
+                                <span th:text="${#dates.format(post.getDate(), 'dd-MMM-yyyy')}"></span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Related Posts Section Ends -->
     </div>
 </body>
 </html>
