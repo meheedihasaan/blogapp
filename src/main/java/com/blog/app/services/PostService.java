@@ -28,15 +28,15 @@ public interface PostService {
     public PostResponse getPostsByUser(int userId, int pageNumber, int pageSize, String sortBy, String sortDirection);
 
     //To get posts by their category
-    public PostResponse getPostByCategory(int categoryId, int pageNumber, int pageSize, String sortBy, String sortDirection);
+    public Page<PostDto> getPostByCategory(int categoryId, int pageNumber, int pageSize, String sortBy, String sortDirection);
 
     //To search a post by keyword
     public PostResponse searchPosts(String keyword, int pageNumber, int pageSize);
 
+    //To get banner posts for home page
+    List<PostDto> getBannerPosts();
+
     //To get featured posts
     List<PostDto> getFeaturedPost();
-
-    //To get banner posts for home
-    List<PostDto> getBannerPosts();
 
 }

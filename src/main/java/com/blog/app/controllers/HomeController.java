@@ -63,13 +63,28 @@ public class HomeController {
         return "blog-template/categories";
     }
 
-    @GetMapping("/categories/{id}/{title}")
-    public String viewCategory(@PathVariable int id, Model model) {
+    @GetMapping("/categories/{id}/{title}/{page}")
+    public String viewCategory(@PathVariable int id, @PathVariable int page, Model model) {
         CategoryDto category = this.categoryService.getCategoryByID(id);
         model.addAttribute("title", "Mini Blog - "+category.getTitle());
         model.addAttribute("category", category);
 
+        Page<PostDto> postDtoPage = this.postService.getPostByCategory(id, page, 3, "date", "desc");
+        model.addAttribute("postDtoPage", postDtoPage);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", postDtoPage.getTotalPages());
+
         return "blog-template/single-category";
+    }
+
+    @GetMapping("/posts/{id}/{title}")
+    public String viewSiglePost(@PathVariable int id, Model model) {
+        model.addAttribute("title", "Min Blog - Read Post");
+
+        PostDto post = this.postService.getPostById(id);
+        model.addAttribute("post", post);
+
+        return "blog-template/single-post";
     }
 
 

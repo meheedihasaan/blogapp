@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:replace="blog-template/base::layout(~{:: .main-content})">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div class="main-content">
+        <!-- Post Header Section Starts -->
+        <div class="site-cover site-cover-sm same-height overlay single-page" style="">
+            <div class="container">
+                <div class="row same-height justify-content-center" style="padding: 50px 0;">
+                    <div class="col-md-12 col-lg-10">
+                        <div class="post-entry text-center">
+                            <span th:text="${post.getCategory().getTitle()}" class="post-category text-white bg-primary mb-3"></span>
+                            <h2 th:text="${post.getTitle()}" class="mb-4"></h2>
+                            <div class="post-meta align-items-center text-center">
+                                <p style="font-size: 16px">
+                                    By <b><a th:text="${post.getUser().getName()}" href="#"></a></b>
+                                </p>
+                                <span th:text="${#dates.format(post.getDate(), 'dd-MMM-yyyy')}"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Post Header Section Ends -->
+
+        <!-- Post Body Section Starts -->
+        <section class="site-section py-lg">
+            <div class="container">
+                <div class="row blog-entries element-animate">
+                    <div class="col-md-12 col-lg-8 main-content">
+                        <div class="post-content-body">
+                            <p th:text="${post.getContent()}"></p>
+                        </div>
+                        <div class="pt-5">
+                            <p>Categories:  <span th:text="${post.getCategory().getTitle()}" class="badge badge-primary"></span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Post Body Section Ends -->
+    </div>
+</body>
+</html>

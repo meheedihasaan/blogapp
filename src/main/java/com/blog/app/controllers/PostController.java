@@ -7,6 +7,7 @@ import com.blog.app.payloads.PostDto;
 import com.blog.app.services.PostService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 //import org.springframework.security.access.prepost.PreAuthorize;
@@ -75,15 +76,15 @@ public class PostController {
 
     //To get posts their category
     @GetMapping("/category/{categoryId}/posts")
-    public ResponseEntity<PostResponse> getPostByCategory(
+    public ResponseEntity<Page<PostDto>> getPostByCategory(
             @PathVariable int categoryId,
             @RequestParam(value = "pageNumber", defaultValue = AppConstants.PAGE_NUMBER, required = false) int pageNumber,
             @RequestParam(value = "pageSize", defaultValue = AppConstants.PAGE_SIZE, required = false) int pageSize,
             @RequestParam(value = "sortBy", defaultValue = AppConstants.SORT_BY, required = false) String sortBy,
             @RequestParam(value = "sortDirection", defaultValue = AppConstants.SORT_DIRECTION, required = false) String sortDirection
     ){
-        PostResponse postResponse = this.postService.getPostByCategory(categoryId, pageNumber, pageSize, sortBy, sortDirection);
-        return new ResponseEntity<>(postResponse, HttpStatus.OK);
+        Page<PostDto> dtoPage = this.postService.getPostByCategory(categoryId, pageNumber, pageSize, sortBy, sortDirection);
+        return new ResponseEntity<>(dtoPage, HttpStatus.OK);
     }
 
     //To search posts by title

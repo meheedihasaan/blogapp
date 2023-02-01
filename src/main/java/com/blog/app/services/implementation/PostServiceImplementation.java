@@ -12,10 +12,7 @@ import com.blog.app.repositories.UserRepository;
 import com.blog.app.services.PostService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -115,9 +112,9 @@ public class PostServiceImplementation implements PostService {
         Page page = this.postRepository.findByUser(user, pageable);
         List<Post> posts = page.getContent();
         List<PostDto> postsDto = posts
-                                    .stream()
-                                    .map(post-> this.postToDto(post))
-                                    .collect(Collectors.toList());
+                                .stream()
+                                .map(post-> this.postToDto(post))
+                                .collect(Collectors.toList());
 
         PostResponse postResponse = new PostResponse();
         postResponse.setPostsDto(postsDto);
@@ -131,7 +128,7 @@ public class PostServiceImplementation implements PostService {
 
     //To get posts by their category
     @Override
-    public PostResponse getPostByCategory(int categoryId, int pageNumber, int pageSize, String sortBy, String sortDirection) {
+    public Page<PostDto> getPostByCategory(int categoryId, int pageNumber, int pageSize, String sortBy, String sortDirection) {
         Category category = this.categoryRepository.findById(categoryId).orElseThrow(()-> new ResourceNotFoundException("Category", "id", categoryId));
 
         //To sort
@@ -148,18 +145,11 @@ public class PostServiceImplementation implements PostService {
         Page page = this.postRepository.findByCategory(category, pageable);
         List<Post> posts = page.getContent();
         List<PostDto> postsDto = posts
-                                    .stream()
-                                    .map(post-> this.postToDto(post))
-                                    .collect(Collectors.toList());
+                                .stream()
+                                .map(post-> this.postToDto(post))
+                                .collect(Collectors.toList());
 
-        PostResponse postResponse = new PostResponse();
-        postResponse.setPostsDto(postsDto);
-        postResponse.setPageNumber(page.getNumber());
-        postResponse.setPageSize(page.getSize());
-        postResponse.setTotalPost((int)page.getTotalElements());
-        postResponse.setTotalPage(page.getTotalPages());
-        postResponse.setLastPage(page.isLast());
-        return postResponse;
+        return new PageImpl<PostDto>(postsDto, pageable, page.getTotalElements());
     }
 
     //To search a post by keyword
@@ -183,6 +173,28 @@ public class PostServiceImplementation implements PostService {
         return postResponse;
     }
 
+    //To get banner posts for home page
+    @Override
+    public List<PostDto> getBannerPosts() {
+        List<Post> posts = this.postRepository.findAll();
+        List<PostDto> postsDto = posts
+                .stream()
+                .map((post)-> this.postToDto(post))
+                .collect(Collectors.toList());
+
+        List<PostDto> bannerPosts = new ArrayList<>();
+        Set<Integer> set = new HashSet<>();
+        Random random = new Random();
+        while (set.size() < 5) {
+            set.add(random.nextInt(posts.size()));
+        }
+
+        for (int i : set) {
+            bannerPosts.add(postsDto.get(i));
+        }
+        return bannerPosts;
+    }
+
     //To get featured posts
     @Override
     public List<PostDto> getFeaturedPost() {
@@ -203,28 +215,6 @@ public class PostServiceImplementation implements PostService {
             featuredPosts.add(postsDto.get(i));
         }
         return featuredPosts;
-    }
-
-    //To get banner posts for home
-    @Override
-    public List<PostDto> getBannerPosts() {
-        List<Post> posts = this.postRepository.findAll();
-        List<PostDto> postsDto = posts
-                                .stream()
-                                .map((post)-> this.postToDto(post))
-                                .collect(Collectors.toList());
-
-        List<PostDto> bannerPosts = new ArrayList<>();
-        Set<Integer> set = new HashSet<>();
-        Random random = new Random();
-        while (set.size() < 5) {
-            set.add(random.nextInt(posts.size()));
-        }
-
-        for (int i : set) {
-            bannerPosts.add(postsDto.get(i));
-        }
-        return bannerPosts;
     }
 
     //To convert PostDto to Post

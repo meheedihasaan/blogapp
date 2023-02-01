@@ -20,11 +20,13 @@
                 <div class="row">
                     <div th:each="post : ${posts}" class="col-lg-4 mb-4">
                         <div class="entry2">
-                            <a href="single.html"><img src=" " alt="Image" class="img-fluid rounded"></a>
+                            <a th:href="@{/blog/posts/{id}/{title} (id = ${post.getId()}, title = ${post.getTitle()}) }">
+                                <img src=" " alt="Image" class="img-fluid rounded">
+                            </a>
                             <div class="excerpt">
-                                <span th:text="${post.getCategory().getTitle()}" class="post-category text-white bg-secondary mb-3"></span>
+                                <span th:text="${post.getCategory().getTitle()}" class="post-category text-white bg-primary mb-3"></span>
                                 <h2>
-                                    <a th:text="${post.getTitle()}" href="single.html"></a>
+                                    <a th:text="${post.getTitle()}" th:href="@{/blog/posts/{id}/{title} (id = ${post.getId()}, title = ${post.getTitle()}) }"></a>
                                 </h2>
                                 <div class="post-meta align-items-center text-left clearfix">
                                     <p style="margin-bottom: 0px; padding-bottom: 0px">
@@ -36,7 +38,7 @@
                                 </div>
 
                                 <p th:text="${#strings.abbreviate(post.getContent(), 150)+'...'}"></p>
-                                <p><a href="#">Read More</a></p>
+                                <p><a th:href="@{/blog/posts/{id}/{title} (id = ${post.getId()}, title = ${post.getTitle()}) }">Read More</a></p>
                             </div>
                         </div>
                     </div>
@@ -68,7 +70,7 @@
 
                 <div class="row align-items-stretch retro-layout">
                     <div class="col-md-5 order-md-2">
-                        <a href="single.html" class="hentry img-1 h-100 gradient" style="">
+                        <a th:href="@{/blog/posts/{id}/{title} (id = ${featuredPosts.get(0).getId()}, title = ${featuredPosts.get(0).getTitle()}) }" class="hentry img-1 h-100 gradient" style="">
                             <span th:text="${featuredPosts.get(0).getCategory().getTitle()}" class="post-category text-white bg-danger"></span>
                             <div class="text">
                                 <h2 th:text="${featuredPosts.get(0).getTitle()}"></h2>
@@ -78,7 +80,7 @@
                     </div>
 
                     <div class="col-md-7">
-                        <a href="single.html" class="hentry img-2 v-height mb30 gradient" style="">
+                        <a th:href="@{/blog/posts/{id}/{title} (id = ${featuredPosts.get(1).getId()}, title = ${featuredPosts.get(1).getTitle()}) }" class="hentry img-2 v-height mb30 gradient" style="">
                             <span th:text="${featuredPosts.get(1).getCategory().getTitle()}" class="post-category text-white bg-success"></span>
                             <div class="text text-sm">
                                 <h2 th:text="${featuredPosts.get(1).getTitle()}"></h2>
@@ -87,14 +89,14 @@
                         </a>
 
                         <div class="two-col d-block d-md-flex">
-                            <a href="single.html" class="hentry v-height img-2 gradient" style="">
+                            <a th:href="@{/blog/posts/{id}/{title} (id = ${featuredPosts.get(2).getId()}, title = ${featuredPosts.get(2).getTitle()}) }" class="hentry v-height img-2 gradient" style="">
                                 <span th:text="${featuredPosts.get(2).getCategory().getTitle()}" class="post-category text-white bg-primary"></span>
                                 <div class="text text-sm">
                                     <h2 th:text="${featuredPosts.get(2).getTitle()}"></h2>
                                     <span th:text="${#dates.format(featuredPosts.get(2).getDate(), 'dd-MMM-yyyy')}"></span>
                                 </div>
                             </a>
-                            <a href="single.html" class="hentry v-height img-2 ml-auto gradient" style="">
+                            <a th:href="@{/blog/posts/{id}/{title} (id = ${featuredPosts.get(3).getId()}, title = ${featuredPosts.get(3).getTitle()}) }" class="hentry v-height img-2 ml-auto gradient" style="">
                                 <span th:text="${featuredPosts.get(3).getCategory().getTitle()}" class="post-category text-white bg-warning"></span>
                                 <div class="text text-sm">
                                     <h2 th:text="${featuredPosts.get(3).getTitle()}"></h2>
