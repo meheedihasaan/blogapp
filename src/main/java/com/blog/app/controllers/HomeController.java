@@ -1,7 +1,6 @@
 package com.blog.app.controllers;
 
 import com.blog.app.entities.Post;
-import com.blog.app.entities.User;
 import com.blog.app.payloads.CategoryDto;
 import com.blog.app.payloads.PostDto;
 import com.blog.app.payloads.UserDto;
