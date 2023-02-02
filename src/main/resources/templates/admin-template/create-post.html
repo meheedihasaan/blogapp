@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:replace="admin-template/base::layout(~{:: .main-content})">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <section class="main-content">
+        <h4 class="mt-4">Create Post</h4>
+        <hr>
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <div class="form">
+                    <div class="card m-2 p-3">
+                        <div class="card-body">
+                            <h2 class="text-center mb-4">New Post</h2>
+
+                            <div class="form-group">
+                              <label for="title">Title</label>
+                                <input
+                                        type="text"
+                                        name="title"
+                                        class="form-control"
+                                        id="title"
+                                        placeholder="Enter Post Title"
+                                >
+                            </div>
+
+                            <div class="form-group">
+                                <label for="category">Category</label>
+                                <select class="form-control" name="category" id="category" placeholder="Category">
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="content">Content</label>
+                                <textarea
+                                        name="content"
+                                        class="form-control"
+                                        id="content"
+                                        placeholder="Write Your Post"
+                                        rows="5"></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="image">Feature Image</label>
+                                <input class="form-control" type="file" id="image">
+                            </div>
+
+                            <input type="submit" th:value="Submit" class="btn btn-primary mt-3">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

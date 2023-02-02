@@ -81,7 +81,7 @@ public class UserServiceImplementation implements UserService {
     }
 
     @Override
-    public UserDto registerUser(UserDto userDto) {
+    public UserDto signupUser(UserDto userDto) {
         User user = this.dtoToUser(userDto);
         //user.setPassword(this.passwordEncoder.encode(user.getPassword()));
         Role role = this.roleRepository.findById(AppConstants.NORMAL_USER).get();

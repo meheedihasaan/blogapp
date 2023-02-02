@@ -11,14 +11,23 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 //import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
-@RequestMapping("/api")
+@Controller
+@RequestMapping("/admin-panel/posts")
 public class PostController {
 
     @Autowired
     private PostService postService;
+
+    @GetMapping("/create-post")
+    public String viewCreatePostPage(Model model) {
+        model.addAttribute("title", "Mini Blog - Create Post");
+
+        return "admin-template/create-post";
+    }
 
     //To create a post
     @PostMapping("/user/{userId}/category/{categoryId}/create")
