@@ -19,7 +19,7 @@
                                 <span class="badge badge-primary">Category</span>
                                 <h2 th:text="${category.getTitle()}"></h2>
                                 <p th:text="${category.getDescription()}"></p>
-                                <a class="btn btn-primary btn-sm" th:href="@{/blog/categories/{id}/{title}/0 (id=${category.getId()}, title=${category.getTitle()}) }">View Posts</a>
+                                <a class="btn btn-primary btn-sm" th:href="@{/categories/{id}/{title}/0 (id=${category.getId()}, title=${category.getTitle()}) }">View Posts</a>
                             </div>
                         </div>
                     </div>

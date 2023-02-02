@@ -26,7 +26,7 @@ public interface PostService {
     public void deletePost(int id);
 
     //To get posts by their creator
-    public PostResponse getPostsByUser(int userId, int pageNumber, int pageSize, String sortBy, String sortDirection);
+    public Page<PostDto> getPostsByUser(int userId, int pageNumber, int pageSize, String sortBy, String sortDirection);
 
     //To get posts by their category
     public Page<PostDto> getPostByCategory(int categoryId, int pageNumber, int pageSize, String sortBy, String sortDirection);

@@ -63,15 +63,15 @@ public class PostController {
 
     //To get posts by their creator
     @GetMapping("/user/{userId}/posts")
-    public ResponseEntity<PostResponse> getPostsByUser(
+    public ResponseEntity<Page<PostDto>> getPostsByUser(
             @PathVariable int userId,
             @RequestParam(value = "pageNumber", defaultValue = AppConstants.PAGE_NUMBER, required = false) int pageNumber,
             @RequestParam(value = "pageSize", defaultValue = AppConstants.PAGE_SIZE, required = false) int pageSize,
             @RequestParam(value = "sortBy", defaultValue = AppConstants.SORT_BY, required = false) String sortBy,
             @RequestParam(value = "sortDirection", defaultValue = AppConstants.SORT_DIRECTION, required = false) String sortDirection
     ){
-        PostResponse postResponse = this.postService.getPostsByUser(userId, pageNumber, pageSize, sortBy, sortDirection);
-        return new ResponseEntity<>(postResponse, HttpStatus.OK);
+        Page<PostDto> postDtoPage = this.postService.getPostsByUser(userId, pageNumber, pageSize, sortBy, sortDirection);
+        return new ResponseEntity<>(postDtoPage, HttpStatus.OK);
     }
 
     //To get posts their category
@@ -83,8 +83,8 @@ public class PostController {
             @RequestParam(value = "sortBy", defaultValue = AppConstants.SORT_BY, required = false) String sortBy,
             @RequestParam(value = "sortDirection", defaultValue = AppConstants.SORT_DIRECTION, required = false) String sortDirection
     ){
-        Page<PostDto> dtoPage = this.postService.getPostByCategory(categoryId, pageNumber, pageSize, sortBy, sortDirection);
-        return new ResponseEntity<>(dtoPage, HttpStatus.OK);
+        Page<PostDto> postDtoPage = this.postService.getPostByCategory(categoryId, pageNumber, pageSize, sortBy, sortDirection);
+        return new ResponseEntity<>(postDtoPage, HttpStatus.OK);
     }
 
     //To search posts by title

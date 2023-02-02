@@ -19,7 +19,7 @@
                             <h2 th:text="${post.getTitle()}" class="mb-4"></h2>
                             <div class="post-meta align-items-center text-center">
                                 <p style="font-size: 16px">
-                                    By <b><a th:text="${post.getUser().getName()}" href="#"></a></b>
+                                    By <b><a th:text="${post.getUser().getName()}" th:href="@{/authors/{id}/{name}/0 (id = ${post.getUser().getId()}, name = ${post.getUser().getName()}) }"></a></b>
                                 </p>
                                 <span th:text="${#dates.format(post.getDate(), 'dd-MMM-yyyy')}"></span>
                             </div>
@@ -34,12 +34,26 @@
         <section class="site-section py-lg">
             <div class="container">
                 <div class="row blog-entries element-animate">
-                    <div class="col-md-12 col-lg-8 main-content">
+                    <div class="col-md-8">
                         <div class="post-content-body">
                             <p th:text="${post.getContent()}"></p>
                         </div>
                         <div class="pt-5">
                             <p>Categories:  <span th:text="${post.getCategory().getTitle()}" class="badge badge-primary"></span></p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <h2 class="text-center mb-3">About Author</h2>
+                        <div class="card text-center p-2">
+                            <div class="card-body">
+                                <h4 th:text="${post.getUser().getName()}"></h4>
+                                <hr>
+                                <p th:text="${post.getUser().getDescription()}"></p>
+                                <hr>
+                                <p th:text="${post.getUser().getEmail()}"></p>
+                                <hr>
+                                <a class="btn btn-primary" th:href="@{/authors/{id}/{name}/0 (id = ${post.getUser().getId()}, name = ${post.getUser().getName()}) }">View More Post</a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -58,7 +72,7 @@
 
                 <div class="row">
                     <div th:each="post : ${relatedPosts}" class="col-md-6 mb-3">
-                        <a th:href="@{/blog/posts/{id}/{title} (id = ${post.getId()}, title = ${post.getTitle()}) }" class="hentry img-1 h-100 gradient" style="">
+                        <a th:href="@{/posts/{id}/{title} (id = ${post.getId()}, title = ${post.getTitle()}) }" class="hentry img-1 h-100 gradient" style="">
                             <span th:text="${post.getCategory().getTitle()}" class="post-category text-white bg-danger"></span>
                             <div class="text">
                                 <h4 th:text="${post

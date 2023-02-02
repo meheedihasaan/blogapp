@@ -1,32 +1,29 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:replace="blog-template/base::layout(~{:: .main-content})">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Title</title>
 </head>
 <body>
-    <section class="main-content">
+    <div class="main-content">
         <div class="site-section py-5 bg-light">
             <div class="container">
                 <div class="row">
                     <div class="col-md-6">
-                        <span class="badge badge-primary">Category</span>
-                        <h3 th:text="${category.getTitle()}"></h3>
-                        <p th:text="${category.getDescription()}"></p>
+                        <span class="badge badge-primary">Author</span>
+                        <h3 th:text="${user.getName()}"></h3>
+                        <p th:text="${user.getDescription()}"></p>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Category Posts Section Starts -->
+        <!-- Author Posts Section Starts -->
         <div class="site-section">
             <div class="container">
                 <div class="row mb-5">
                     <div class="col-12">
-                        <h2 th:text="'Recent Posts From ' + ${category.getTitle()}"></h2>
+                        <h2 th:text="'Recent Posts From ' + ${user.getName()}"></h2>
                     </div>
                 </div>
                 <div class="row">
@@ -60,16 +57,16 @@
                         <!-- Pagination -->
                         <nav aria-label="Page navigation example">
                             <ul class="pagination justify-content-center">
-                                <li th:if="${currentPage != 0}" class="page-item"><a class="page-link" th:href="@{'/categories/{id}/{title}/' + ${currentPage - 1} (id = ${category.getId}, title = ${category.getTitle()}) }">Prev</a></li>
-                                <li th:classappend="${currentPage == page - 1? 'active' : ''}" th:each="page : ${#numbers.sequence(1, totalPages)}" class="page-item"><a class="page-link" th:href="@{'/categories/{id}/{title}/' + ${page - 1} (id = ${category.getId()}, title=${category.getTitle()}) }"><span th:text="${page}"></span></a></li>
-                                <li th:if="${currentPage+1 != totalPages}" class="page-item"><a class="page-link" th:href="@{'/categories/{id}/{title}/' + ${currentPage+1} (id = ${category.getId()}, title = ${category.getTitle()}) }">Next</a></li>
+                                <li th:if="${currentPage != 0}" class="page-item"><a class="page-link" th:href="@{'/authors/{id}/{name}/' + ${currentPage - 1} (id = ${user.getId}, name = ${user.getName()}) }">Prev</a></li>
+                                <li th:classappend="${currentPage == page - 1? 'active' : ''}" th:each="page : ${#numbers.sequence(1, totalPages)}" class="page-item"><a class="page-link" th:href="@{'/authors/{id}/{name}/' + ${page - 1} (id = ${user.getId()}, name=${user.getName()}) }"><span th:text="${page}"></span></a></li>
+                                <li th:if="${currentPage+1 != totalPages}" class="page-item"><a class="page-link" th:href="@{'/authors/{id}/{name}/' + ${currentPage+1} (id = ${user.getId()}, name = ${user.getName()}) }">Next</a></li>
                             </ul>
                         </nav>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- Category Posts Section Ends -->
-    </section>
+        <!-- Author Posts Section Ends -->
+    </div>
 </body>
 </html>

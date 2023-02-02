@@ -95,7 +95,7 @@ public class PostServiceImplementation implements PostService {
 
     //To get posts by their creator
     @Override
-    public PostResponse getPostsByUser(int userId, int pageNumber, int pageSize, String sortBy, String sortDirection) {
+    public Page<PostDto> getPostsByUser(int userId, int pageNumber, int pageSize, String sortBy, String sortDirection) {
         User user = this.userRepository.findById(userId).orElseThrow(()-> new ResourceNotFoundException("User", "id", userId));
 
         //To sort
@@ -116,14 +116,7 @@ public class PostServiceImplementation implements PostService {
                                 .map(post-> this.postToDto(post))
                                 .collect(Collectors.toList());
 
-        PostResponse postResponse = new PostResponse();
-        postResponse.setPostsDto(postsDto);
-        postResponse.setPageNumber(page.getNumber());
-        postResponse.setPageSize(page.getSize());
-        postResponse.setTotalPost((int)page.getTotalElements());
-        postResponse.setTotalPage(page.getTotalPages());
-        postResponse.setLastPage(page.isLast());
-        return postResponse;
+        return new PageImpl<PostDto>(postsDto, pageable, page.getTotalElements());
     }
 
     //To get posts by their category
