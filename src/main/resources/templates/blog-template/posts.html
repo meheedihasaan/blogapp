@@ -18,7 +18,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div th:each="post : ${posts}" class="col-lg-4 mb-4">
+                    <div th:each="post : ${postDtoPage}" class="col-lg-4 mb-4">
                         <div class="entry2">
                             <a th:href="@{/posts/{id}/{title} (id = ${post.getId()}, title = ${post.getTitle()}) }">
                                 <img src=" " alt="Image" class="img-fluid rounded">

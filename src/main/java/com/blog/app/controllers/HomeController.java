@@ -44,10 +44,10 @@ public class HomeController {
         model.addAttribute("title", "Mini Blog - Posts");
 
         //All Posts
-        Page<Post> posts = this.postService.getAllPosts(page, 3, "date", "desc");
-        model.addAttribute("posts", posts);
+        Page<PostDto> postDtoPage = this.postService.getAllPosts(page, 3, "date", "desc");
+        model.addAttribute("postDtoPage", postDtoPage);
         model.addAttribute("currentPage", page);
-        model.addAttribute("totalPages", posts.getTotalPages());
+        model.addAttribute("totalPages", postDtoPage.getTotalPages());
 
         //Featured Posts
         List<PostDto> featuredPosts = this.postService.getFeaturedPost();

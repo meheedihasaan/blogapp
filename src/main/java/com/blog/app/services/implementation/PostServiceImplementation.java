@@ -64,7 +64,13 @@ public class PostServiceImplementation implements PostService {
         //For pagination
         Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
         Page<Post> page = this.postRepository.findAll(pageable);
-        return page;
+        List<Post> posts = page.getContent();
+        List<PostDto> postsDto = posts
+                                .stream()
+                                .map((post)-> this.postToDto(post))
+                                .collect(Collectors.toList());
+
+        return new PageImpl(postsDto, pageable, page.getTotalElements());
     }
 
     //To get a post by its id

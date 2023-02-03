@@ -14,7 +14,7 @@ public interface PostService {
     public PostDto createPost(PostDto postDto, int userId, int categoryId);
 
     //To get all the posts
-    public Page getAllPosts(int pageNumber, int pageSize, String sortBy, String sortDirection);
+    public Page<PostDto> getAllPosts(int pageNumber, int pageSize, String sortBy, String sortDirection);
 
     //To get a post by its id
     public PostDto getPostById(int id);
