@@ -11,15 +11,22 @@
 <section class="main-content bg-light">
     <div class="row">
         <div class="col-md-6 offset-md-3">
-            <div class="form">
+            <form th:action="@{/doLogin}" method="POST">
                 <div class="card my-5 mx-2 p-3">
                     <div class="card-body">
-                        <h2 class="text-center mb-4">Login</h2>
+                        <div th:if="${param.error}" class="alert alert-danger text-center">
+                            Invalid email or password
+                        </div>
+                        <div th:if="${param.logout}" class="alert alert-success text-center">
+                            You have been logged out
+                        </div>
+
+                        <h2 class="text-center mb-4">Sign In Here</h2>
 
                         <div class="form-group">
                             <input
                                     type="email"
-                                    name="email"
+                                    name="username"
                                     class="form-control"
                                     placeholder="Enter Your Email"
                             >
@@ -34,14 +41,14 @@
                             >
                         </div>
 
-                        <input type="submit" th:value="Login" class="btn btn-primary mt-3">
+                        <input type="submit" value="Sign In" class="btn btn-primary mt-3">
 
                         <div class="text-center mt-3">
                             <p><a th:href="@{/signup}">Do not have an account? Sign up here</a></p>
                         </div>
                     </div>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 </section>
