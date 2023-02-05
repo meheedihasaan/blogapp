@@ -11,6 +11,7 @@ import com.blog.app.services.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -88,6 +89,13 @@ public class UserServiceImplementation implements UserService {
         user.getRoles().add(role);
         this.userRepository.save(user);
 
+        return this.userToDto(user);
+    }
+
+    //To get a user by his email
+    @Override
+    public UserDto getUserByEmail(String email) {
+        User user = this.userRepository.findByEmail(email).orElseThrow(()-> new UsernameNotFoundException("User not found with email"+ email));
         return this.userToDto(user);
     }
 

@@ -23,4 +23,7 @@ public interface UserService {
     //To register a user
     public UserDto signupUser(UserDto userDto);
 
+    //To get a user by his email
+    public UserDto getUserByEmail(String email);
+
 }
