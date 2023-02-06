@@ -4,7 +4,9 @@ import com.blog.app.configs.AppConstants;
 import com.blog.app.helper.ApiResponse;
 import com.blog.app.helper.PostResponse;
 import com.blog.app.payloads.PostDto;
+import com.blog.app.payloads.UserDto;
 import com.blog.app.services.PostService;
+import com.blog.app.services.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -15,6 +17,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
+
 @Controller
 @RequestMapping("/admin-panel/posts")
 public class PostController {
@@ -22,9 +26,16 @@ public class PostController {
     @Autowired
     private PostService postService;
 
+    @Autowired
+    private UserService userService;
+
     @GetMapping("/create-post")
-    public String viewCreatePostPage(Model model) {
+    public String viewCreatePostPage(Model model, Principal principal) {
         model.addAttribute("title", "Mini Blog - Create Post");
+
+        String username = principal.getName();
+        UserDto user = this.userService.getUserByEmail(username);  //Email is used as username
+        model.addAttribute("user", user);
 
         return "admin-template/create-post";
     }

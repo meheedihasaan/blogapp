@@ -22,7 +22,7 @@ public class AdminController {
         model.addAttribute("title", "Mini Blog - Dashboard");
 
         String username = principal.getName();
-        UserDto user = this.userService.getUserByEmail(username);  //We used email as username
+        UserDto user = this.userService.getUserByEmail(username);  //Email is used as username
         model.addAttribute("user", user);
 
         return "admin-template/index";

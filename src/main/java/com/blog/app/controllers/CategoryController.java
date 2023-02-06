@@ -2,7 +2,9 @@ package com.blog.app.controllers;
 
 import com.blog.app.helper.ApiResponse;
 import com.blog.app.payloads.CategoryDto;
+import com.blog.app.payloads.UserDto;
 import com.blog.app.services.CategoryService;
+import com.blog.app.services.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -21,9 +24,16 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
+    @Autowired
+    private UserService userService;
+
     @GetMapping("/create-category")
-    public String viewCreateCategoryPage(Model model) {
+    public String viewCreateCategoryPage(Model model, Principal principal) {
         model.addAttribute("title", "Mini Blog - Create Category");
+
+        String username = principal.getName();
+        UserDto user = this.userService.getUserByEmail(username); //Email is used as username
+        model.addAttribute("user", user);
 
         return "admin-template/create-category";
     }
