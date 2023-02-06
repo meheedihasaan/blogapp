@@ -50,7 +50,7 @@ public class AuthController {
             }
             else {
                 this.userService.signupUser(user);
-                redirectAttributes.addFlashAttribute("message", new Message("alert-success", "Congratulations! You have successfully registered."));
+                redirectAttributes.addFlashAttribute("message", new Message("alert-primary", "Congratulations! You have successfully registered."));
             }
 
             return "redirect:/signup";

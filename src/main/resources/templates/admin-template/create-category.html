@@ -13,36 +13,56 @@
         <hr>
         <div class="row">
             <div class="col-md-8 offset-md-2">
-                <div class="form">
+                <form method="POST" th:action="@{/admin-panel/categories/create-category/process}" th:object="${category}">
                     <div class="card m-2 p-3">
                         <div class="card-body">
+
+                            <!-- FLASH MESSAGE START -->
+                            <div th:if="${message}">
+                                <div class="alert text-center" th:classappend="${message.type}" role="alert" th:text="${message.content}">
+                                </div>
+                            </div>
+                            <!-- FLASH MESSAGE END -->
+
                             <h2 class="text-center mb-4">New Category</h2>
 
                             <div class="form-group">
-                                <label for="name">Category Name</label>
+                                <label for="title">Category Name</label>
                                 <input
                                         type="text"
-                                        name="name"
                                         class="form-control"
-                                        id="name"
+                                        id="title"
+                                        th:field="*{title}"
+                                        th:value="${category.title}"
+                                        th:classappend="${#fields.hasErrors('title') ? 'is-invalid' : ''}"
                                         placeholder="Enter Category Name"
                                 >
+
+                                <div class="invalid-feedback" th:each="e : ${#fields.errors('title')}" th:text="${e}">
+
+                                </div>
                             </div>
 
                             <div class="form-group">
                                 <label for="description">Description</label>
                                 <textarea
-                                        name="description"
                                         class="form-control"
                                         id="description"
-                                        placeholder="Write Something About This Category"
-                                        rows="5"></textarea>
+                                        rows="5"
+                                        th:field="*{description}"
+                                        th:value="${category.description}"
+                                        th:classappend="${#fields.hasErrors('description') ? 'is-invalid' : ''}"
+                                        placeholder="Write Something About This Category"></textarea>
+
+                                <div class="invalid-feedback" th:each="e : ${#fields.errors('description')}" th:text="${e}">
+
+                                </div>
                             </div>
 
                             <input type="submit" th:value="Submit" class="btn btn-primary mt-3">
                         </div>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
     </section>

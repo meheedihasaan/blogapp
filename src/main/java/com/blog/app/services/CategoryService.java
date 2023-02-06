@@ -20,4 +20,8 @@ public interface CategoryService {
 
     //To delete a category by its id
     public void deleteCategory(int id);
+
+    //To get a category by its title
+    public CategoryDto getCategoryByTitleIgnoreCase(String title);
+
 }

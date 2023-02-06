@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -64,6 +65,16 @@ public class CategoryServiceImplementation implements CategoryService {
     public void deleteCategory(int id) {
         Category category = this.categoryRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Category", "id", id));
         this.categoryRepository.delete(category);
+    }
+
+    //To get a category by its title
+    @Override
+    public CategoryDto getCategoryByTitleIgnoreCase(String title) {
+        Optional<Category> categoryOptional = this.categoryRepository.findByTitleIgnoreCase(title);
+        if(categoryOptional.isEmpty()){
+            return null;
+        }
+        return this.categoryToDto(categoryOptional.get());
     }
 
     //To convert CategoryDto to Category

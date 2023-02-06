@@ -95,11 +95,11 @@ public class UserServiceImplementation implements UserService {
     //To get a user by his email
     @Override
     public UserDto getUserByEmail(String email) {
-        Optional<User> optional = this.userRepository.findByEmail(email);
-        if (optional.isEmpty()) {
+        Optional<User> userOptional = this.userRepository.findByEmail(email);
+        if (userOptional.isEmpty()) {
             return null;
         }
-        return this.userToDto(optional.get());
+        return this.userToDto(userOptional.get());
     }
 
     //To convert UserDto to User
