@@ -4,6 +4,7 @@ import com.blog.app.security.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -14,7 +15,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
-@EnableMethodSecurity(prePostEnabled = true)
+@EnableMethodSecurity(prePostEnabled = false)
 public class SecurityConfig {
 
     public static final String[] PUBLIC_URLS = {
@@ -23,6 +24,7 @@ public class SecurityConfig {
             "/categories/**",
             "/authors/**",
             "/signup",
+            "/signup-process",
             "/login"
     };
 
@@ -37,7 +39,7 @@ public class SecurityConfig {
                     authorize
                         .requestMatchers("/blog-resources/**", "/admin-resources/**").permitAll()
                         .requestMatchers(PUBLIC_URLS).permitAll()
-                        .anyRequest().authenticated()
+                        .requestMatchers("/admin-panel/**").hasAnyRole("ADMIN", "NORMAL")
             )
             .formLogin()
             .loginPage("/login")
@@ -50,12 +52,6 @@ public class SecurityConfig {
         httpSecurity.authenticationProvider(daoAuthenticationProvider());
         return httpSecurity.build();
     }
-
-//    @Bean
-//    public WebSecurityCustomizer webSecurityCustomizer() {
-//        return (web)-> web.ignoring().requestMatchers("/blog-resources/**", "/admin-resources/**");
-//    }
-
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {

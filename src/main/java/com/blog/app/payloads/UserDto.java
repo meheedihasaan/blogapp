@@ -27,12 +27,13 @@ public class UserDto {
     @NotEmpty(message = "Email is required.")
     private String email;
 
-    @NotEmpty
+    @NotEmpty(message = "Password is required.")
     @Size(min = 4, max = 32, message = "Password must be between 4 to 32 characters.")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
-    @Size(min = 0, max = 10000, message = "Description must contain less than or equal 10000 characters.")
+    @NotEmpty(message = "Description is required.")
+    @Size(min = 10, max = 10000, message = "Description must be between 10 to 1000 characters.")
     private String description;
 
     List<RoleDto> roles = new ArrayList<>();

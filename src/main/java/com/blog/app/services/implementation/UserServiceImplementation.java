@@ -10,11 +10,11 @@ import com.blog.app.repositories.UserRepository;
 import com.blog.app.services.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -26,8 +26,8 @@ public class UserServiceImplementation implements UserService {
     @Autowired
     private ModelMapper modelMapper;
 
-//    @Autowired
-//    private PasswordEncoder passwordEncoder;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     private RoleRepository roleRepository;
@@ -84,7 +84,7 @@ public class UserServiceImplementation implements UserService {
     @Override
     public UserDto signupUser(UserDto userDto) {
         User user = this.dtoToUser(userDto);
-        //user.setPassword(this.passwordEncoder.encode(user.getPassword()));
+        user.setPassword(this.passwordEncoder.encode(user.getPassword()));
         Role role = this.roleRepository.findById(AppConstants.NORMAL_USER).get();
         user.getRoles().add(role);
         this.userRepository.save(user);
@@ -95,8 +95,11 @@ public class UserServiceImplementation implements UserService {
     //To get a user by his email
     @Override
     public UserDto getUserByEmail(String email) {
-        User user = this.userRepository.findByEmail(email).orElseThrow(()-> new UsernameNotFoundException("User not found with email"+ email));
-        return this.userToDto(user);
+        Optional<User> optional = this.userRepository.findByEmail(email);
+        if (optional.isEmpty()) {
+            return null;
+        }
+        return this.userToDto(optional.get());
     }
 
     //To convert UserDto to User

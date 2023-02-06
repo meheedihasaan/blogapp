@@ -11,7 +11,7 @@
 <section class="main-content bg-light">
     <div class="row">
         <div class="col-md-6 offset-md-3">
-            <form th:action="@{/doLogin}" method="POST">
+            <form method="POST" th:action="@{/doLogin}">
                 <div class="card my-5 mx-2 p-3">
                     <div class="card-body">
                         <div th:if="${param.error}" class="alert alert-danger text-center">
