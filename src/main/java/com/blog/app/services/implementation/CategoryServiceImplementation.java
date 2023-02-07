@@ -7,6 +7,7 @@ import com.blog.app.repositories.CategoryRepository;
 import com.blog.app.services.CategoryService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,16 +31,39 @@ public class CategoryServiceImplementation implements CategoryService {
         return categoryToDto(savedCategory);
     }
 
-    //To get all the categories
-    @Override
-    public List<CategoryDto> getAllCategories() {
+    //To get all the categories with list in blog-template
+    public List<CategoryDto> getAllCategories(){
         List<Category> categories = this.categoryRepository.findAll();
-        //Convert categories to categoryDtos
         List<CategoryDto> categoriesDto = categories
-                                                .stream()
-                                                .map((category)-> this.categoryToDto(category))
-                                                .collect(Collectors.toList());
+                                            .stream()
+                                            .map((category)-> this.categoryToDto(category))
+                                            .collect(Collectors.toList());
+
         return categoriesDto;
+    }
+
+    //To get all the categories with pagination in admin-panel
+    @Override
+    public Page<CategoryDto> getAllCategories(int pageNumber, int pageSize, String sortBy, String sortDirection) {
+        //To sort
+        Sort sort = null;
+        if (sortDirection.equalsIgnoreCase("asc")) {
+            sort = Sort.by(sortBy).ascending();
+        }
+        else if (sortDirection.equalsIgnoreCase("desc")) {
+            sort = Sort.by(sortBy).descending();
+        }
+
+        //For pagination
+        Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
+        Page<Category> page = this.categoryRepository.findAll(pageable);
+        List<Category>  categories = page.getContent();
+        List<CategoryDto> categoriesDto = categories
+                                            .stream()
+                                            .map((category)-> this.categoryToDto(category))
+                                            .collect(Collectors.toList());
+
+        return new PageImpl<CategoryDto>(categoriesDto, pageable, page.getTotalElements());
     }
 
     //To get a category by its id

@@ -8,6 +8,7 @@ import com.blog.app.services.CategoryService;
 import com.blog.app.services.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 //import org.springframework.security.access.prepost.PreAuthorize;
@@ -80,10 +81,15 @@ public class CategoryController {
         }
     }
 
-    @GetMapping("/all")
-    public String getAllCategories(Model model, Principal principal) {
+    @GetMapping("/all/{page}")
+    public String getAllCategories(@PathVariable int page, Model model, Principal principal) {
         model.addAttribute("title", "Mini Blog - View Categories");
         loadCommonData(model, principal);
+
+        Page<CategoryDto> categoryDtoPage = this.categoryService.getAllCategories(page, 5, "title", "asc");
+        model.addAttribute("categoryDtoPage", categoryDtoPage);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", categoryDtoPage.getTotalPages());
 
         return "admin-template/categories";
     }

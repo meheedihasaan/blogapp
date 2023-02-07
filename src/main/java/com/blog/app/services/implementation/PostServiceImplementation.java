@@ -51,7 +51,7 @@ public class PostServiceImplementation implements PostService {
 
     //To get all the posts
     @Override
-    public Page getAllPosts(int pageNumber, int pageSize, String sortBy, String sortDirection) {
+    public Page<PostDto> getAllPosts(int pageNumber, int pageSize, String sortBy, String sortDirection) {
         //To sort
         Sort sort = null;
         if(sortDirection.equalsIgnoreCase("asc")){
@@ -70,7 +70,7 @@ public class PostServiceImplementation implements PostService {
                                 .map((post)-> this.postToDto(post))
                                 .collect(Collectors.toList());
 
-        return new PageImpl(postsDto, pageable, page.getTotalElements());
+        return new PageImpl<PostDto>(postsDto, pageable, page.getTotalElements());
     }
 
     //To get a post by its id
