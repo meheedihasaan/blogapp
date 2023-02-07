@@ -80,6 +80,14 @@ public class CategoryController {
         }
     }
 
+    @GetMapping("/all")
+    public String getAllCategories(Model model, Principal principal) {
+        model.addAttribute("title", "Mini Blog - View Categories");
+        loadCommonData(model, principal);
+
+        return "admin-template/categories";
+    }
+
     //To create a category
     @PostMapping("/create")
     public ResponseEntity<CategoryDto> createCategory(@Valid @RequestBody CategoryDto categoryDto){
@@ -88,11 +96,11 @@ public class CategoryController {
     }
 
     //To get all the categories
-    @GetMapping("/all")
-    public ResponseEntity<List<CategoryDto>> getAllCategories(){
-        List<CategoryDto> categoriesDto = this.categoryService.getAllCategories();
-        return new ResponseEntity<>(categoriesDto, HttpStatus.OK);
-    }
+//    @GetMapping("/all")
+//    public ResponseEntity<List<CategoryDto>> getAllCategories(){
+//        List<CategoryDto> categoriesDto = this.categoryService.getAllCategories();
+//        return new ResponseEntity<>(categoriesDto, HttpStatus.OK);
+//    }
 
     //To get a category by its id
     @GetMapping("/{id}")
