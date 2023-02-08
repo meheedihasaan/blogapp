@@ -39,7 +39,7 @@ public class HomeController {
         return "blog-template/index";
     }
 
-    @GetMapping("/posts/{page}")
+    @GetMapping("/posts/all/{page}")
     public String getAllPosts(@PathVariable int page, Model model) {
         model.addAttribute("title", "Mini Blog - Posts");
 

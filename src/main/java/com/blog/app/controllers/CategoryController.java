@@ -94,12 +94,49 @@ public class CategoryController {
         return "admin-template/categories";
     }
 
-    //To create a category
-    @PostMapping("/create")
-    public ResponseEntity<CategoryDto> createCategory(@Valid @RequestBody CategoryDto categoryDto){
-        CategoryDto savedCategoryDto = this.categoryService.createCategory(categoryDto);
-        return new ResponseEntity<>(savedCategoryDto, HttpStatus.CREATED);
+    @GetMapping("/{id}/{title}/edit")
+    public String viewEditCategoryPage(@PathVariable int id, Model model, Principal principal) {
+        model.addAttribute("title", "Mini Blog - Edit Category");
+        loadCommonData(model, principal);
+
+        CategoryDto category = this.categoryService.getCategoryByID(id);
+        model.addAttribute("category", category);
+
+        return "admin-template/edit-category";
     }
+
+    @PostMapping("/{id}/{title}/edit-process")
+    public String editCategory(
+            @Valid @ModelAttribute("category") CategoryDto category, BindingResult bindingResult,
+            RedirectAttributes redirectAttributes,
+            Model model,
+            Principal principal)
+    {
+        model.addAttribute("title", "Mini Blog - Edit Category");
+        loadCommonData(model, principal);
+        try {
+            if (bindingResult.hasErrors()) {
+                model.addAttribute("category", category);
+                return "admin-template/edit-category";
+            }
+
+            this.categoryService.updateCategory(category, category.getId());
+            redirectAttributes.addFlashAttribute("message", new Message("alert-primary", "Category is updated successfully."));
+
+            return "redirect:/admin-panel/categories/all/0";
+        }
+        catch (Exception e) {
+            redirectAttributes.addFlashAttribute("message", new Message("alert-danger" ,"Something went wrong. "+e.getMessage()));
+            return "redirect:/admin-panel/categories/all/0";
+        }
+    }
+
+    //To create a category
+//    @PostMapping("/create")
+//    public ResponseEntity<CategoryDto> createCategory(@Valid @RequestBody CategoryDto categoryDto){
+//        CategoryDto savedCategoryDto = this.categoryService.createCategory(categoryDto);
+//        return new ResponseEntity<>(savedCategoryDto, HttpStatus.CREATED);
+//    }
 
     //To get all the categories
 //    @GetMapping("/all")

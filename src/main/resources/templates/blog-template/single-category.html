@@ -14,8 +14,8 @@
                 <div class="row">
                     <div class="col-md-6">
                         <span class="badge badge-primary">Category</span>
-                        <h3 th:text="${category.getTitle()}"></h3>
-                        <p th:text="${category.getDescription()}"></p>
+                        <h3 th:text="${category.title}"></h3>
+                        <p th:text="${category.description}"></p>
                     </div>
                 </div>
             </div>
@@ -26,31 +26,31 @@
             <div class="container">
                 <div class="row mb-5">
                     <div class="col-12">
-                        <h2 th:text="'Recent Posts From ' + ${category.getTitle()}"></h2>
+                        <h2 th:text="'Recent Posts From ' + ${category.title}"></h2>
                     </div>
                 </div>
                 <div class="row">
                     <div th:each="post : ${postDtoPage}" class="col-lg-4 mb-4">
                         <div class="entry2">
-                            <a th:href="@{/posts/{id}/{title} (id = ${post.getId()}, title = ${post.getTitle()}) }">
+                            <a th:href="@{/posts/{id}/{title} (id = ${post.id}, title = ${post.title}) }">
                                 <img src=" " alt="Image" class="img-fluid rounded">
                             </a>
                             <div class="excerpt">
-                                <span th:text="${post.getCategory().getTitle()}" class="post-category text-white bg-primary mb-3"></span>
+                                <span th:text="${post.category.title}" class="post-category text-white bg-primary mb-3"></span>
                                 <h2>
-                                    <a th:text="${post.getTitle()}" th:href="@{/posts/{id}/{title} (id = ${post.getId()}, title = ${post.getTitle()}) }"></a>
+                                    <a th:text="${post.title}" th:href="@{/posts/{id}/{title} (id = ${post.id}, title = ${post.title}) }"></a>
                                 </h2>
                                 <div class="post-meta align-items-center text-left clearfix">
                                     <p style="margin-bottom: 0px; padding-bottom: 0px">
-                                        <span th:text="${#dates.format(post.getDate(), 'dd-MMM-yyyy')}"></span>
+                                        <span th:text="${#dates.format(post.date, 'dd-MMM-yyyy')}"></span>
                                     </p>
                                     <p style="font-size: 16px">
-                                        By <b><a th:text="${post.getUser().getName()}" href="#"></a></b>
+                                        By <b><a th:text="${post.user.name}" href="#"></a></b>
                                     </p>
                                 </div>
 
                                 <p th:text="${#strings.abbreviate(post.getContent(), 150)+'...'}"></p>
-                                <p><a th:href="@{/posts/{id}/{title} (id = ${post.getId()}, title = ${post.getTitle()}) }">Read More</a></p>
+                                <p><a th:href="@{/posts/{id}/{title} (id = ${post.id}, title = ${post.title}) }">Read More</a></p>
                             </div>
                         </div>
                     </div>
@@ -60,9 +60,9 @@
                         <!-- Pagination -->
                         <nav aria-label="Page navigation example">
                             <ul class="pagination justify-content-center">
-                                <li th:if="${currentPage != 0}" class="page-item"><a class="page-link" th:href="@{'/categories/{id}/{title}/' + ${currentPage - 1} (id = ${category.getId}, title = ${category.getTitle()}) }">Prev</a></li>
-                                <li th:classappend="${currentPage == page - 1? 'active' : ''}" th:each="page : ${#numbers.sequence(1, totalPages)}" class="page-item"><a class="page-link" th:href="@{'/categories/{id}/{title}/' + ${page - 1} (id = ${category.getId()}, title=${category.getTitle()}) }"><span th:text="${page}"></span></a></li>
-                                <li th:if="${currentPage+1 != totalPages}" class="page-item"><a class="page-link" th:href="@{'/categories/{id}/{title}/' + ${currentPage+1} (id = ${category.getId()}, title = ${category.getTitle()}) }">Next</a></li>
+                                <li th:if="${currentPage != 0}" class="page-item"><a class="page-link" th:href="@{'/categories/{id}/{title}/' + ${currentPage - 1} (id = ${category.id}, title = ${category.title}) }">Prev</a></li>
+                                <li th:classappend="${currentPage == page - 1? 'active' : ''}" th:each="page : ${#numbers.sequence(1, totalPages)}" class="page-item"><a class="page-link" th:href="@{'/categories/{id}/{title}/' + ${page - 1} (id = ${category.id}, title=${category.title}) }"><span th:text="${page}"></span></a></li>
+                                <li th:if="${currentPage+1 != totalPages}" class="page-item"><a class="page-link" th:href="@{'/categories/{id}/{title}/' + ${currentPage+1} (id = ${category.id}, title = ${category.title}) }">Next</a></li>
                             </ul>
                         </nav>
                     </div>

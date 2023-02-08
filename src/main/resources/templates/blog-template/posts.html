@@ -20,25 +20,25 @@
                 <div class="row">
                     <div th:each="post : ${postDtoPage}" class="col-lg-4 mb-4">
                         <div class="entry2">
-                            <a th:href="@{/posts/{id}/{title} (id = ${post.getId()}, title = ${post.getTitle()}) }">
+                            <a th:href="@{/posts/{id}/{title} (id = ${post.id}, title = ${post.title}) }">
                                 <img src=" " alt="Image" class="img-fluid rounded">
                             </a>
                             <div class="excerpt">
-                                <span th:text="${post.getCategory().getTitle()}" class="post-category text-white bg-primary mb-3"></span>
+                                <span th:text="${post.category.title}" class="post-category text-white bg-primary mb-3"></span>
                                 <h2>
-                                    <a th:text="${post.getTitle()}" th:href="@{/posts/{id}/{title} (id = ${post.getId()}, title = ${post.getTitle()}) }"></a>
+                                    <a th:text="${post.title}" th:href="@{/posts/{id}/{title} (id = ${post.id}, title = ${post.title}) }"></a>
                                 </h2>
                                 <div class="post-meta align-items-center text-left clearfix">
                                     <p style="margin-bottom: 0px; padding-bottom: 0px">
-                                        <span th:text="${#dates.format(post.getDate(), 'dd-MMM-yyyy')}"></span>
+                                        <span th:text="${#dates.format(post.date, 'dd-MMM-yyyy')}"></span>
                                     </p>
                                     <p style="font-size: 16px">
-                                        By <b><a th:text="${post.getUser().getName()}" th:href="@{/authors/{id}/{name}/0 (id = ${post.getUser().getId()}, name = ${post.getUser().getName()}) }"></a></b>
+                                        By <b><a th:text="${post.user.name}" th:href="@{/authors/{id}/{name}/0 (id = ${post.user.id}, name = ${post.user.name}) }"></a></b>
                                     </p>
                                 </div>
 
-                                <p th:text="${#strings.abbreviate(post.getContent(), 150)+'...'}"></p>
-                                <p><a th:href="@{/posts/{id}/{title} (id = ${post.getId()}, title = ${post.getTitle()}) }">Read More</a></p>
+                                <p th:text="${#strings.abbreviate(post.content, 150)+'...'}"></p>
+                                <p><a th:href="@{/posts/{id}/{title} (id = ${post.id}, title = ${post.title}) }">Read More</a></p>
                             </div>
                         </div>
                     </div>
@@ -48,9 +48,9 @@
                         <!-- Pagination -->
                         <nav aria-label="Page navigation example">
                             <ul class="pagination justify-content-center">
-                                <li th:if="${currentPage != 0}" class="page-item"><a class="page-link" th:href="@{'/posts/' + ${currentPage - 1}}">Prev</a></li>
-                                <li th:classappend="${currentPage == page - 1? 'active' : ''}" th:each="page : ${#numbers.sequence(1, totalPages)}" class="page-item"><a class="page-link" th:href="@{'/posts/' + ${page - 1}}"><span th:text="${page}"></span></a></li>
-                                <li th:if="${currentPage+1 != totalPages}" class="page-item"><a class="page-link" th:href="@{'/posts/' + ${currentPage+1}}">Next</a></li>
+                                <li th:if="${currentPage != 0}" class="page-item"><a class="page-link" th:href="@{'/posts/all/' + ${currentPage - 1}}">Prev</a></li>
+                                <li th:classappend="${currentPage == page - 1? 'active' : ''}" th:each="page : ${#numbers.sequence(1, totalPages)}" class="page-item"><a class="page-link" th:href="@{'/posts/all/' + ${page - 1}}"><span th:text="${page}"></span></a></li>
+                                <li th:if="${currentPage+1 != totalPages}" class="page-item"><a class="page-link" th:href="@{'/posts/all/' + ${currentPage+1}}">Next</a></li>
                             </ul>
                         </nav>
                     </div>
@@ -70,37 +70,37 @@
 
                 <div class="row align-items-stretch retro-layout">
                     <div class="col-md-5 order-md-2">
-                        <a th:href="@{/posts/{id}/{title} (id = ${featuredPosts.get(0).getId()}, title = ${featuredPosts.get(0).getTitle()}) }" class="hentry img-1 h-100 gradient" style="">
-                            <span th:text="${featuredPosts.get(0).getCategory().getTitle()}" class="post-category text-white bg-danger"></span>
+                        <a th:href="@{/posts/{id}/{title} (id = ${featuredPosts.get(0).id}, title = ${featuredPosts.get(0).title}) }" class="hentry img-1 h-100 gradient" style="">
+                            <span th:text="${featuredPosts.get(0).category.title}" class="post-category text-white bg-danger"></span>
                             <div class="text">
-                                <h2 th:text="${featuredPosts.get(0).getTitle()}"></h2>
-                                <span th:text="${#dates.format(featuredPosts.get(0).getDate(), 'dd-MMM-yyyy')}"></span>
+                                <h2 th:text="${featuredPosts.get(0).title}"></h2>
+                                <span th:text="${#dates.format(featuredPosts.get(0).date, 'dd-MMM-yyyy')}"></span>
                             </div>
                         </a>
                     </div>
 
                     <div class="col-md-7">
-                        <a th:href="@{/posts/{id}/{title} (id = ${featuredPosts.get(1).getId()}, title = ${featuredPosts.get(1).getTitle()}) }" class="hentry img-2 v-height mb30 gradient" style="">
-                            <span th:text="${featuredPosts.get(1).getCategory().getTitle()}" class="post-category text-white bg-success"></span>
+                        <a th:href="@{/posts/{id}/{title} (id = ${featuredPosts.get(1).id}, title = ${featuredPosts.get(1).title}) }" class="hentry img-2 v-height mb30 gradient" style="">
+                            <span th:text="${featuredPosts.get(1).category.title}" class="post-category text-white bg-success"></span>
                             <div class="text text-sm">
-                                <h2 th:text="${featuredPosts.get(1).getTitle()}"></h2>
-                                <span th:text="${#dates.format(featuredPosts.get(1).getDate(), 'dd-MMM-yyyy')}"></span>
+                                <h2 th:text="${featuredPosts.get(1).title}"></h2>
+                                <span th:text="${#dates.format(featuredPosts.get(1).date, 'dd-MMM-yyyy')}"></span>
                             </div>
                         </a>
 
                         <div class="two-col d-block d-md-flex">
-                            <a th:href="@{/posts/{id}/{title} (id = ${featuredPosts.get(2).getId()}, title = ${featuredPosts.get(2).getTitle()}) }" class="hentry v-height img-2 gradient" style="">
-                                <span th:text="${featuredPosts.get(2).getCategory().getTitle()}" class="post-category text-white bg-primary"></span>
+                            <a th:href="@{/posts/{id}/{title} (id = ${featuredPosts.get(2).id}, title = ${featuredPosts.get(2).title}) }" class="hentry v-height img-2 gradient" style="">
+                                <span th:text="${featuredPosts.get(2).category.title}" class="post-category text-white bg-primary"></span>
                                 <div class="text text-sm">
-                                    <h2 th:text="${featuredPosts.get(2).getTitle()}"></h2>
-                                    <span th:text="${#dates.format(featuredPosts.get(2).getDate(), 'dd-MMM-yyyy')}"></span>
+                                    <h2 th:text="${featuredPosts.get(2).title}"></h2>
+                                    <span th:text="${#dates.format(featuredPosts.get(2).date, 'dd-MMM-yyyy')}"></span>
                                 </div>
                             </a>
-                            <a th:href="@{/posts/{id}/{title} (id = ${featuredPosts.get(3).getId()}, title = ${featuredPosts.get(3).getTitle()}) }" class="hentry v-height img-2 ml-auto gradient" style="">
-                                <span th:text="${featuredPosts.get(3).getCategory().getTitle()}" class="post-category text-white bg-warning"></span>
+                            <a th:href="@{/posts/{id}/{title} (id = ${featuredPosts.get(3).id}, title = ${featuredPosts.get(3).title}) }" class="hentry v-height img-2 ml-auto gradient" style="">
+                                <span th:text="${featuredPosts.get(3).category.title}" class="post-category text-white bg-warning"></span>
                                 <div class="text text-sm">
-                                    <h2 th:text="${featuredPosts.get(3).getTitle()}"></h2>
-                                    <span th:text="${#dates.format(featuredPosts.get(3).getDate(), 'dd-MMM-yyyy')}"></span>
+                                    <h2 th:text="${featuredPosts.get(3).title}"></h2>
+                                    <span th:text="${#dates.format(featuredPosts.get(3).date, 'dd-MMM-yyyy')}"></span>
                                 </div>
                             </a>
                         </div>

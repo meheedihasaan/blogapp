@@ -17,9 +17,9 @@
                         <div class="card p-3 m-2">
                             <div class="card-body">
                                 <span class="badge badge-primary">Category</span>
-                                <h2 th:text="${category.getTitle()}"></h2>
-                                <p th:text="${category.getDescription()}"></p>
-                                <a class="btn btn-primary btn-sm" th:href="@{/categories/{id}/{title}/0 (id=${category.getId()}, title=${category.getTitle()}) }">View Posts</a>
+                                <h2 th:text="${category.title}"></h2>
+                                <p th:text="${category.description}"></p>
+                                <a class="btn btn-primary btn-sm" th:href="@{/categories/{id}/{title}/0 (id = ${category.id}, title = ${category.description}) }">View Posts</a>
                             </div>
                         </div>
                     </div>
