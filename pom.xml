@@ -48,6 +48,13 @@
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
 
+        <!-- For Thymeleaf Authorization -->
+        <dependency>
+            <groupId>org.thymeleaf.extras</groupId>
+            <artifactId>thymeleaf-extras-springsecurity6</artifactId>
+            <version>3.1.0.RELEASE</version>
+        </dependency>
+
         <!-- For Dev Tools -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
