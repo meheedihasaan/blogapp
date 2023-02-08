@@ -13,51 +13,79 @@
         <hr>
         <div class="row">
             <div class="col-md-8 offset-md-2">
-                <div class="form">
+                <form method="POST" th:action="@{/admin-panel/posts/create-post/process}" th:object="${post}">
                     <div class="card m-2 p-3">
                         <div class="card-body">
+
+                            <!-- FLASH MESSAGE START -->
+                            <div th:if="${message}">
+                                <div class="alert text-center" th:classappend="${message.type}" role="alert" th:text="${message.content}">
+                                </div>
+                            </div>
+                            <!-- FLASH MESSAGE END -->
+
                             <h4 class="text-center mb-4">New Post</h4>
 
                             <div class="form-group">
                               <label for="title">Title</label>
                                 <input
                                         type="text"
-                                        name="title"
                                         class="form-control"
                                         id="title"
+                                        th:field="*{title}"
+                                        th:value="${post.title}"
+                                        th:classappend="${#fields.hasErrors('title') ? 'is-invalid' : ''}"
                                         placeholder="Enter Post Title"
                                 >
+
+                                <div class="invalid-feedback" th:each="error : ${#fields.errors('title')}" th:text="${error}">
+
+                                </div>
                             </div>
 
                             <div class="form-group">
                                 <label for="category">Category</label>
-                                <select class="form-control" name="category" id="category" placeholder="Category">
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
+                                <select class="form-control" id="category" name="categoryId" placeholder="Category">
+                                    <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.title}"></option>
                                 </select>
                             </div>
 
                             <div class="form-group">
                                 <label for="content">Content</label>
                                 <textarea
-                                        name="content"
                                         class="form-control"
                                         id="content"
+                                        th:field="*{content}"
+                                        th:value="${post.content}"
+                                        th:classappend="${#fields.hasErrors('content') ? 'is-invalid' : ''}"
                                         placeholder="Write Your Post"
                                         rows="5"></textarea>
+
+                                <div class="invalid-feedback" th:each="error : ${#fields.errors('content')}" th:text="${error}">
+
+                                </div>
                             </div>
 
                             <div class="form-group">
                                 <label for="image">Feature Image</label>
-                                <input class="form-control" type="file" id="image">
+                                <input
+                                        type="file"
+                                        class="form-control"
+                                        id="image"
+                                        th:field="*{imageUrl}"
+                                        th:value="${post.imageUrl}"
+                                        th:classappend="${#fields.hasErrors('imageUrl') ? 'is-invalid' : ''}"
+                                >
+
+                                <div class="invalid-feedback" th:each="error : ${#fields.errors('imageUrl')}" th:text="${error}">
+
+                                </div>
                             </div>
 
                             <input type="submit" th:value="Submit" class="btn btn-primary mt-3">
                         </div>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
     </section>

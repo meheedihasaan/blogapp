@@ -2,9 +2,12 @@ package com.blog.app.controllers;
 
 import com.blog.app.configs.AppConstants;
 import com.blog.app.helper.ApiResponse;
+import com.blog.app.helper.Message;
 import com.blog.app.helper.PostResponse;
+import com.blog.app.payloads.CategoryDto;
 import com.blog.app.payloads.PostDto;
 import com.blog.app.payloads.UserDto;
+import com.blog.app.services.CategoryService;
 import com.blog.app.services.PostService;
 import com.blog.app.services.UserService;
 import jakarta.validation.Valid;
@@ -15,9 +18,12 @@ import org.springframework.http.ResponseEntity;
 //import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
+import java.util.List;
 
 @Controller
 @RequestMapping("/admin-panel/posts")
@@ -29,15 +35,56 @@ public class PostController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/create-post")
-    public String viewCreatePostPage(Model model, Principal principal) {
-        model.addAttribute("title", "Mini Blog - Create Post");
+    @Autowired
+    private CategoryService categoryService;
 
+    public void loadCommonData(Model model, Principal principal) {
         String username = principal.getName();
         UserDto user = this.userService.getUserByEmail(username);  //Email is used as username
         model.addAttribute("user", user);
+    }
+
+    @GetMapping("/create-post")
+    public String viewCreatePostPage(Model model, Principal principal) {
+        model.addAttribute("title", "Mini Blog - Create Post");
+        loadCommonData(model, principal);
+
+        List<CategoryDto> categories = this.categoryService.getAllCategories();
+        model.addAttribute("categories", categories);
+        model.addAttribute("post", new PostDto());
 
         return "admin-template/create-post";
+    }
+
+    @PostMapping("/create-post/process")
+    public String createPost(
+            @Valid @ModelAttribute("post") PostDto post, BindingResult bindingResult,
+            @RequestParam(value = "categoryId", defaultValue = "0", required = true) int categoryId,
+            RedirectAttributes redirectAttributes,
+            Model model,
+            Principal principal)
+    {
+        model.addAttribute("title", "Mini Blog - Create Post");
+        loadCommonData(model, principal);
+        try {
+            if (bindingResult.hasErrors()) {
+                System.out.println(bindingResult.toString());
+                List<CategoryDto> categories = this.categoryService.getAllCategories();
+                model.addAttribute("categories", categories);
+                model.addAttribute("post", post);
+                return "admin-template/create-post";
+            }
+
+            CategoryDto category = this.categoryService.getCategoryByID(categoryId);
+            post.setCategory(category);
+            System.out.println(post.getTitle()+" "+post.getCategory().getTitle()+" "+post.getImageUrl());
+            redirectAttributes.addFlashAttribute("message", new Message("alert-primary", "Post is created successfully."));
+            return "redirect:/admin-panel/posts/create-post";
+        }
+        catch (Exception e) {
+            redirectAttributes.addFlashAttribute("message", new Message("alert-daanger", "Something went wrong. "+e.getMessage()));
+            return "redirect:/admin-panel/posts/create-post";
+        }
     }
 
     //To create a post

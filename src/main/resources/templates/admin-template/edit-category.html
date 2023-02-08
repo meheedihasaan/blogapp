@@ -37,7 +37,7 @@
                       placeholder="Enter Category Name"
               >
 
-              <div class="invalid-feedback" th:each="e : ${#fields.errors('title')}" th:text="${e}">
+              <div class="invalid-feedback" th:each="error : ${#fields.errors('title')}" th:text="${error}">
 
               </div>
             </div>
@@ -53,7 +53,7 @@
                       th:classappend="${#fields.hasErrors('description') ? 'is-invalid' : ''}"
                       placeholder="Write Something About This Category"></textarea>
 
-              <div class="invalid-feedback" th:each="e : ${#fields.errors('description')}" th:text="${e}">
+              <div class="invalid-feedback" th:each="error : ${#fields.errors('description')}" th:text="${error}">
 
               </div>
             </div>
