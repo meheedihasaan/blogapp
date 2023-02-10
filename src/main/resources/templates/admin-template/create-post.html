@@ -13,7 +13,7 @@
         <hr>
         <div class="row">
             <div class="col-md-8 offset-md-2">
-                <form method="POST" th:action="@{/admin-panel/posts/create-post/process}" th:object="${post}">
+                <form method="POST" enctype="multipart/form-data" th:action="@{/admin-panel/posts/create-post/process}" th:object="${post}">
                     <div class="card m-2 p-3">
                         <div class="card-body">
 
@@ -27,7 +27,7 @@
                             <h4 class="text-center mb-4">New Post</h4>
 
                             <div class="form-group">
-                              <label for="title">Title</label>
+                              <label for="title" class="form-label">Title</label>
                                 <input
                                         type="text"
                                         class="form-control"
@@ -44,14 +44,14 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="category">Category</label>
+                                <label for="category" class="form-label">Category</label>
                                 <select class="form-control" id="category" name="categoryId" placeholder="Category">
                                     <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.title}"></option>
                                 </select>
                             </div>
 
                             <div class="form-group">
-                                <label for="content">Content</label>
+                                <label for="content" class="form-label">Content</label>
                                 <textarea
                                         class="form-control"
                                         id="content"
@@ -66,20 +66,14 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
-                                <label for="image">Feature Image</label>
+                            <div class="mb-1">
+                                <label for="imageFile" class="form-label">Default file input example</label>
                                 <input
                                         type="file"
                                         class="form-control"
-                                        id="image"
-                                        th:field="*{imageUrl}"
-                                        th:value="${post.imageUrl}"
-                                        th:classappend="${#fields.hasErrors('imageUrl') ? 'is-invalid' : ''}"
+                                        id="imageFile"
+                                        name="imageFile"
                                 >
-
-                                <div class="invalid-feedback" th:each="error : ${#fields.errors('imageUrl')}" th:text="${error}">
-
-                                </div>
                             </div>
 
                             <input type="submit" th:value="Submit" class="btn btn-primary mt-3">

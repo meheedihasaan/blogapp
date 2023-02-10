@@ -24,7 +24,6 @@ public class PostDto {
     @Size(min = 200, max = 10000, message = "Post content length must be between 200 to 10000 characters.")
     private String content;
 
-    @NotEmpty(message = "Cover photo is required.")
     private String imageUrl;
 
     private Date date;

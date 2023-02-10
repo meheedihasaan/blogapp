@@ -61,14 +61,12 @@ public class CategoryController {
             CategoryDto existing = this.categoryService.getCategoryByTitleIgnoreCase(category.getTitle());
             if (existing != null) {
                 redirectAttributes.addFlashAttribute("message", new Message("alert-danger", "The category name you entered is already stored. Please create a new category."));
-            }
-            else {
-                this.categoryService.createCategory(category);
-                redirectAttributes.addFlashAttribute("message", new Message("alert-primary","Category is created successfully."));
+                return "redirect:/admin-panel/categories/create-category";
             }
 
+            this.categoryService.createCategory(category);
+            redirectAttributes.addFlashAttribute("message", new Message("alert-primary","Category is created successfully."));
             return "redirect:/admin-panel/categories/create-category";
-
         }
         catch (Exception e) {
             model.addAttribute("category", category);

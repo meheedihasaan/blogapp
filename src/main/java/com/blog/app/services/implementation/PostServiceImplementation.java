@@ -13,6 +13,7 @@ import com.blog.app.services.PostService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -35,13 +36,13 @@ public class PostServiceImplementation implements PostService {
 
     //To create a post
     @Override
-    public PostDto createPost(PostDto postDto, int userId, int categoryId) {
+    public PostDto createPost(PostDto postDto, String username, int categoryId, String imageUrl) {
         //To fetch Creator and Category of the post
-        User user = this.userRepository.findById(userId).orElseThrow(()-> new ResourceNotFoundException("User", "id", userId));
+        User user = this.userRepository.findByEmail(username).orElseThrow(()-> new UsernameNotFoundException("User not found with email "+username));
         Category category = this.categoryRepository.findById(categoryId).orElseThrow(()-> new ResourceNotFoundException("Category", "id", categoryId));
 
         Post post = this.dtoToPost(postDto);
-        post.setImageUrl("postImage.jpg");
+        post.setImageUrl(imageUrl);
         post.setDate(new Date());
         post.setUser(user);
         post.setCategory(category);

@@ -7,7 +7,9 @@ import com.blog.app.helper.PostResponse;
 import com.blog.app.payloads.CategoryDto;
 import com.blog.app.payloads.PostDto;
 import com.blog.app.payloads.UserDto;
+import com.blog.app.repositories.CategoryRepository;
 import com.blog.app.services.CategoryService;
+import com.blog.app.services.FileService;
 import com.blog.app.services.PostService;
 import com.blog.app.services.UserService;
 import jakarta.validation.Valid;
@@ -15,11 +17,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-//import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
@@ -37,6 +39,11 @@ public class PostController {
 
     @Autowired
     private CategoryService categoryService;
+
+    @Autowired
+    private FileService fileService;
+    @Autowired
+    private CategoryRepository categoryRepository;
 
     public void loadCommonData(Model model, Principal principal) {
         String username = principal.getName();
@@ -60,6 +67,7 @@ public class PostController {
     public String createPost(
             @Valid @ModelAttribute("post") PostDto post, BindingResult bindingResult,
             @RequestParam(value = "categoryId", defaultValue = "0", required = true) int categoryId,
+            @RequestParam("imageFile") MultipartFile imageFile,
             RedirectAttributes redirectAttributes,
             Model model,
             Principal principal)
@@ -75,24 +83,28 @@ public class PostController {
                 return "admin-template/create-post";
             }
 
-            CategoryDto category = this.categoryService.getCategoryByID(categoryId);
-            post.setCategory(category);
-            System.out.println(post.getTitle()+" "+post.getCategory().getTitle()+" "+post.getImageUrl());
+            if(imageFile.isEmpty()) {
+                redirectAttributes.addFlashAttribute("message", new Message("alert-danger", "Please upload a feature image with your post."));
+                return "redirect:/admin-panel/posts/create-post";
+            }
+
+            String imageUrl = this.fileService.uploadImage(imageFile);
+            this.postService.createPost(post, principal.getName(), categoryId, imageUrl);
             redirectAttributes.addFlashAttribute("message", new Message("alert-primary", "Post is created successfully."));
             return "redirect:/admin-panel/posts/create-post";
         }
         catch (Exception e) {
-            redirectAttributes.addFlashAttribute("message", new Message("alert-daanger", "Something went wrong. "+e.getMessage()));
+            redirectAttributes.addFlashAttribute("message", new Message("alert-danger", "Something went wrong. "+e.getMessage()));
             return "redirect:/admin-panel/posts/create-post";
         }
     }
 
     //To create a post
-    @PostMapping("/user/{userId}/category/{categoryId}/create")
-    public ResponseEntity<PostDto> createPost(@Valid @RequestBody PostDto postDto, @PathVariable int userId, @PathVariable int categoryId){
-        PostDto savedPostDto = this.postService.createPost(postDto, userId, categoryId);
-        return new ResponseEntity<>(savedPostDto, HttpStatus.CREATED);
-    }
+//    @PostMapping("/user/{userId}/category/{categoryId}/create")
+//    public ResponseEntity<PostDto> createPost(@Valid @RequestBody PostDto postDto, @PathVariable int userId, @PathVariable int categoryId){
+//        PostDto savedPostDto = this.postService.createPost(postDto, userId, categoryId);
+//        return new ResponseEntity<>(savedPostDto, HttpStatus.CREATED);
+//    }
 
     //To get all the posts
     @GetMapping("/posts/all")

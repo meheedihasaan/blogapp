@@ -11,7 +11,7 @@ import java.util.List;
 public interface PostService {
 
     //To create a post
-    public PostDto createPost(PostDto postDto, int userId, int categoryId);
+    public PostDto createPost(PostDto postDto, String username, int categoryId, String imageUrl);
 
     //To get all the posts
     public Page<PostDto> getAllPosts(int pageNumber, int pageSize, String sortBy, String sortDirection);
