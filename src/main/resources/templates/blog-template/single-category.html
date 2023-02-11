@@ -33,7 +33,7 @@
                     <div th:each="post : ${postDtoPage}" class="col-lg-4 mb-4">
                         <div class="entry2">
                             <a th:href="@{/posts/{id}/{title} (id = ${post.id}, title = ${post.title}) }">
-                                <img src=" " alt="Image" class="img-fluid rounded">
+                                <img th:src="@{'/img/'+${post.imageUrl}}" alt="Image" class="img-fluid rounded">
                             </a>
                             <div class="excerpt">
                                 <span th:text="${post.category.title}" class="post-category text-white bg-primary mb-3"></span>

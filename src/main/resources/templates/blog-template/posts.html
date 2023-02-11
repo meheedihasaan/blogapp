@@ -21,7 +21,7 @@
                     <div th:each="post : ${postDtoPage}" class="col-lg-4 mb-4">
                         <div class="entry2">
                             <a th:href="@{/posts/{id}/{title} (id = ${post.id}, title = ${post.title}) }">
-                                <img src=" " alt="Image" class="img-fluid rounded">
+                                <img th:src="@{'/img/'+${post.imageUrl}}" alt="Image" class="img-fluid rounded">
                             </a>
                             <div class="excerpt">
                                 <span th:text="${post.category.title}" class="post-category text-white bg-primary mb-3"></span>
@@ -70,7 +70,7 @@
 
                 <div class="row align-items-stretch retro-layout">
                     <div class="col-md-5 order-md-2">
-                        <a th:href="@{/posts/{id}/{title} (id = ${featuredPosts.get(0).id}, title = ${featuredPosts.get(0).title}) }" class="hentry img-1 h-100 gradient" style="">
+                        <a th:href="@{/posts/{id}/{title} (id = ${featuredPosts.get(0).id}, title = ${featuredPosts.get(0).title}) }" class="hentry img-1 h-100 gradient" th:style=" 'background-image:url(' +@{'/img/'+${featuredPosts.get(0).imageUrl}}+ ');' ">
                             <span th:text="${featuredPosts.get(0).category.title}" class="post-category text-white bg-danger"></span>
                             <div class="text">
                                 <h2 th:text="${featuredPosts.get(0).title}"></h2>
@@ -80,7 +80,7 @@
                     </div>
 
                     <div class="col-md-7">
-                        <a th:href="@{/posts/{id}/{title} (id = ${featuredPosts.get(1).id}, title = ${featuredPosts.get(1).title}) }" class="hentry img-2 v-height mb30 gradient" style="">
+                        <a th:href="@{/posts/{id}/{title} (id = ${featuredPosts.get(1).id}, title = ${featuredPosts.get(1).title}) }" class="hentry img-2 v-height mb30 gradient" th:style=" 'background-image:url(' +@{'/img/'+${featuredPosts.get(1).imageUrl}}+ ');' ">
                             <span th:text="${featuredPosts.get(1).category.title}" class="post-category text-white bg-success"></span>
                             <div class="text text-sm">
                                 <h2 th:text="${featuredPosts.get(1).title}"></h2>
@@ -89,14 +89,14 @@
                         </a>
 
                         <div class="two-col d-block d-md-flex">
-                            <a th:href="@{/posts/{id}/{title} (id = ${featuredPosts.get(2).id}, title = ${featuredPosts.get(2).title}) }" class="hentry v-height img-2 gradient" style="">
+                            <a th:href="@{/posts/{id}/{title} (id = ${featuredPosts.get(2).id}, title = ${featuredPosts.get(2).title}) }" class="hentry v-height img-2 gradient" th:style=" 'background-image:url(' +@{'/img/'+${featuredPosts.get(2).imageUrl}}+ ');' ">
                                 <span th:text="${featuredPosts.get(2).category.title}" class="post-category text-white bg-primary"></span>
                                 <div class="text text-sm">
                                     <h2 th:text="${featuredPosts.get(2).title}"></h2>
                                     <span th:text="${#dates.format(featuredPosts.get(2).date, 'dd-MMM-yyyy')}"></span>
                                 </div>
                             </a>
-                            <a th:href="@{/posts/{id}/{title} (id = ${featuredPosts.get(3).id}, title = ${featuredPosts.get(3).title}) }" class="hentry v-height img-2 ml-auto gradient" style="">
+                            <a th:href="@{/posts/{id}/{title} (id = ${featuredPosts.get(3).id}, title = ${featuredPosts.get(3).title}) }" class="hentry v-height img-2 ml-auto gradient" th:style=" 'background-image:url(' +@{'/img/'+${featuredPosts.get(3).imageUrl}}+ ');' ">
                                 <span th:text="${featuredPosts.get(3).category.title}" class="post-category text-white bg-warning"></span>
                                 <div class="text text-sm">
                                     <h2 th:text="${featuredPosts.get(3).title}"></h2>

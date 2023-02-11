@@ -38,7 +38,7 @@ public class SecurityConfig {
             .authorizeHttpRequests(
                 authorize ->
                     authorize
-                        .requestMatchers("/blog-resources/**", "/admin-resources/**").permitAll()
+                        .requestMatchers("/blog-resources/**", "/admin-resources/**", "/img/**").permitAll()
                         .requestMatchers(PUBLIC_URLS).permitAll()
                         .requestMatchers("/admin-panel/**").hasAnyRole("ADMIN", "NORMAL")
             )

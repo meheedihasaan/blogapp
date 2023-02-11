@@ -99,23 +99,17 @@ public class PostController {
         }
     }
 
-    //To create a post
-//    @PostMapping("/user/{userId}/category/{categoryId}/create")
-//    public ResponseEntity<PostDto> createPost(@Valid @RequestBody PostDto postDto, @PathVariable int userId, @PathVariable int categoryId){
-//        PostDto savedPostDto = this.postService.createPost(postDto, userId, categoryId);
-//        return new ResponseEntity<>(savedPostDto, HttpStatus.CREATED);
-//    }
+    @GetMapping("/all/{page}")
+    public String getAllPosts(@PathVariable int page, Model model, Principal principal) {
+        model.addAttribute("title", "Mini Blog - My Posts");
+        loadCommonData(model, principal);
 
-    //To get all the posts
-    @GetMapping("/posts/all")
-    public ResponseEntity<PostResponse> getAllPosts(
-            @RequestParam(value = "pageNumber", defaultValue = AppConstants.PAGE_NUMBER, required = false) int pageNumber,
-            @RequestParam(value = "pageSize", defaultValue = AppConstants.PAGE_SIZE, required = false) int pageSize,
-            @RequestParam(value = "sortBy", defaultValue = AppConstants.SORT_BY, required = false) String sortBy,
-            @RequestParam(value = "sortDirection", defaultValue = AppConstants.SORT_DIRECTION, required = false) String sortDirection
-    ){
-        //PostResponse postResponse = this.postService.getAllPosts(pageNumber, pageSize, sortBy, sortDirection);
-        return new ResponseEntity<>(null, HttpStatus.OK);
+        UserDto user = this.userService.getUserByEmail(principal.getName());
+        Page<PostDto> postDtoPage = this.postService.getPostsByUser(user.getId(), page, 5, "date", "desc");
+        model.addAttribute("postDtoPage", postDtoPage);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", postDtoPage.getTotalPages());
+        return "admin-template/my-posts";
     }
 
     //To get a post by its id
