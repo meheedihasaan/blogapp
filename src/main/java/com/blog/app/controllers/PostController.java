@@ -76,7 +76,6 @@ public class PostController {
         loadCommonData(model, principal);
         try {
             if (bindingResult.hasErrors()) {
-                System.out.println(bindingResult.toString());
                 List<CategoryDto> categories = this.categoryService.getAllCategories();
                 model.addAttribute("categories", categories);
                 model.addAttribute("post", post);
@@ -120,6 +119,57 @@ public class PostController {
         PostDto post = this.postService.getPostById(id);
         model.addAttribute("post", post);
         return "admin-template/view-post";
+    }
+
+    @GetMapping("/my-posts/{id}/edit/{title}")
+    public String viewEditPostPage(@PathVariable int id, Model model, Principal principal) {
+        model.addAttribute("title", "Mini Blog - Edit Post");
+        loadCommonData(model, principal);
+
+        PostDto post = this.postService.getPostById(id);
+        List<CategoryDto> categories = this.categoryService.getAllCategories();
+        model.addAttribute("post", post);
+        model.addAttribute("categories", categories);
+        return "admin-template/edit-post";
+    }
+
+    @PostMapping("/my-posts/{id}/edit-process")
+    public String viewEditPostPage(
+            @Valid @ModelAttribute("post") PostDto post, BindingResult bindingResult,
+            @RequestParam(value = "categoryId", defaultValue = "0", required = true) int categoryId,
+            @RequestParam("imageFile") MultipartFile imageFile,
+            RedirectAttributes redirectAttributes,
+            Model model,
+            Principal principal)
+    {
+        model.addAttribute("title", "Mini Blog - Edit Post");
+        loadCommonData(model, principal);
+        try {
+            if (bindingResult.hasErrors()) {
+                List<CategoryDto> categories = this.categoryService.getAllCategories();
+                CategoryDto category = this.categoryService.getCategoryByID(categoryId);
+                post.setCategory(category);
+                model.addAttribute("post", post);
+                model.addAttribute("categories", categories);
+                return "admin-template/edit-post";
+            }
+
+            if(!imageFile.isEmpty()) {
+                String imageUrl = this.fileService.uploadImage(imageFile);
+                post.setImageUrl(imageUrl);
+            }
+
+            CategoryDto category = this.categoryService.getCategoryByID(categoryId);
+            post.setCategory(category);
+            PostDto updatedPost = this.postService.updatePost(post, post.getId());
+            redirectAttributes.addFlashAttribute("message", new Message("alert-primary", "Post is updated successfully."));
+            return "redirect:/admin-panel/posts/my-posts/all/0";
+        }
+        catch (Exception e) {
+            redirectAttributes.addFlashAttribute("message", new Message("alert-danger", "Something went wrong. "+e.getMessage()));
+            return "redirect:/admin-panel/posts/my-posts/all/0";
+        }
+
     }
 
 

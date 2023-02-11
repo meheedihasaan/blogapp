@@ -47,7 +47,7 @@
                     </div>
 
                     <div class="col-md-4">
-                        <a th:href="@{/posts/{id}/{title} (id = ${bannerPosts.get(3).id}, title = ${bannerPosts.get(3).title}) }" class="h-entry mb-30 v-height gradient" th:style=" 'background-image: url(' +@{'/img'+${bannerPosts.get(3).imageUrl}}+ ');' ">
+                        <a th:href="@{/posts/{id}/{title} (id = ${bannerPosts.get(3).id}, title = ${bannerPosts.get(3).title}) }" class="h-entry mb-30 v-height gradient" th:style=" 'background-image: url(' +@{'/img/'+${bannerPosts.get(3).imageUrl}}+ ');' ">
                             <div class="text">
                                 <div class="post-categories mb-3">
                                     <span th:text="${bannerPosts.get(3).category.title}" class="post-category bg-primary"></span>
