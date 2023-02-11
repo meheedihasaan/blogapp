@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" th:replace="admin-template/base::layout(~{:: .main-content})">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <section class="main-content">
+        <h4 class="mt-4">View Post</h4>
+        <hr>
+        <div class="row mb-4">
+            <div class="col-md-8 offset-md-2">
+                <div class="card bg-light">
+                    <img class="img-fluid" style="height: 65vh" th:src="@{'/img/'+${post.imageUrl}}" alt="">
+                    <div class="card-body m-2 p-3">
+                        <h4 th:text="${post.title}"></h4>
+                        <hr>
+                        <p th:text="${post.content}"></p>
+                    </div>
+                    <div class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            Author: <b><span th:text="${post.user.name}"></span></b>
+                        </li>
+                        <li class="list-group-item">
+                            Category: <span class="badge badge-primary" th:text="${post.category.title}"></span>
+                        </li>
+                        <li class="list-group-item">
+                            Published At: <b><span th:text="${#dates.format(post.date, 'dd-MMM-yyyy')}"></span></b>
+                        </li>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

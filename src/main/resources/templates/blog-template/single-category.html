@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:replace="blog-template/base::layout(~{:: .main-content})">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <section class="main-content">
+        <div class="site-section py-5 bg-light">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <span class="badge badge-primary">Category</span>
+                        <h3 th:text="${category.title}"></h3>
+                        <p th:text="${category.description}"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Category Posts Section Starts -->
+        <div class="site-section">
+            <div class="container">
+                <div class="row mb-5">
+                    <div class="col-12">
+                        <h2 th:text="'Recent Posts From ' + ${category.title}"></h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div th:each="post : ${postDtoPage}" class="col-lg-4 mb-4">
+                        <div class="entry2">
+                            <a th:href="@{/posts/{id}/{title} (id = ${post.id}, title = ${post.title}) }">
+                                <img th:src="@{'/img/'+${post.imageUrl}}" alt="Image" class="img-fluid rounded">
+                            </a>
+                            <div class="excerpt">
+                                <span th:text="${post.category.title}" class="post-category text-white bg-primary mb-3"></span>
+                                <h2>
+                                    <a th:text="${post.title}" th:href="@{/posts/{id}/{title} (id = ${post.id}, title = ${post.title}) }"></a>
+                                </h2>
+                                <div class="post-meta align-items-center text-left clearfix">
+                                    <p style="margin-bottom: 0px; padding-bottom: 0px">
+                                        <span th:text="${#dates.format(post.date, 'dd-MMM-yyyy')}"></span>
+                                    </p>
+                                    <p style="font-size: 16px">
+                                        By <b><a th:text="${post.user.name}" href="#"></a></b>
+                                    </p>
+                                </div>
+
+                                <p th:text="${#strings.abbreviate(post.getContent(), 150)+'...'}"></p>
+                                <p><a th:href="@{/posts/{id}/{title} (id = ${post.id}, title = ${post.title}) }">Read More</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row text-center pt-5 border-top">
+                    <div class="col-md-12">
+                        <!-- Pagination -->
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination justify-content-center">
+                                <li th:if="${currentPage != 0}" class="page-item"><a class="page-link" th:href="@{'/categories/{id}/{title}/' + ${currentPage - 1} (id = ${category.id}, title = ${category.title}) }">Prev</a></li>
+                                <li th:classappend="${currentPage == page - 1? 'active' : ''}" th:each="page : ${#numbers.sequence(1, totalPages)}" class="page-item"><a class="page-link" th:href="@{'/categories/{id}/{title}/' + ${page - 1} (id = ${category.id}, title=${category.title}) }"><span th:text="${page}"></span></a></li>
+                                <li th:if="${currentPage+1 != totalPages}" class="page-item"><a class="page-link" th:href="@{'/categories/{id}/{title}/' + ${currentPage+1} (id = ${category.id}, title = ${category.title}) }">Next</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Category Posts Section Ends -->
+    </section>
+</body>
+</html>

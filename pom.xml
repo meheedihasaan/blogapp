@@ -48,6 +48,13 @@
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
 
+        <!-- For Thymeleaf Authorization -->
+        <dependency>
+            <groupId>org.thymeleaf.extras</groupId>
+            <artifactId>thymeleaf-extras-springsecurity6</artifactId>
+            <version>3.1.0.RELEASE</version>
+        </dependency>
+
         <!-- For Dev Tools -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -63,20 +70,6 @@
             <scope>runtime</scope>
         </dependency>
 
-        <!-- For JWT Authentication -->
-        <dependency>
-            <groupId>io.jsonwebtoken</groupId>
-            <artifactId>jjwt</artifactId>
-            <version>0.9.1</version>
-        </dependency>
-
-        <!-- For  Java XML Bind - Data Type Conversion during JWT Authentication -->
-        <dependency>
-            <groupId>javax.xml.bind</groupId>
-            <artifactId>jaxb-api</artifactId>
-            <version>2.3.1</version>
-        </dependency>
-
         <!-- For API Documentation(Swagger UI -->
         <dependency>
             <groupId>org.springdoc</groupId>
@@ -90,6 +83,13 @@
             <artifactId>lombok</artifactId>
             <optional>true</optional>
         </dependency>
+
+        <!-- For Thymeleaf -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+
 
         <!-- For Testing Application -->
         <dependency>

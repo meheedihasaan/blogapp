@@ -21,6 +21,9 @@ public interface UserService {
     public void deleteUser(int id);
 
     //To register a user
-    public UserDto registerUser(UserDto userDto);
+    public UserDto signupUser(UserDto userDto);
+
+    //To get a user by his email
+    public UserDto getUserByEmail(String email);
 
 }

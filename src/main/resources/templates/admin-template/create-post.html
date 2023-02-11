@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:replace="admin-template/base::layout(~{:: .main-content})">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <section class="main-content">
+        <h4 class="mt-4">Create Post</h4>
+        <hr>
+        <div class="row mb-3">
+            <div class="col-md-8 offset-md-2">
+                <form method="POST" enctype="multipart/form-data" th:action="@{/admin-panel/posts/create-post/process}" th:object="${post}">
+                    <div class="card m-2 p-3">
+                        <div class="card-body">
+
+                            <!-- FLASH MESSAGE START -->
+                            <div th:if="${message}">
+                                <div class="alert text-center" th:classappend="${message.type}" role="alert" th:text="${message.content}">
+                                </div>
+                            </div>
+                            <!-- FLASH MESSAGE END -->
+
+                            <h4 class="text-center mb-4">New Post</h4>
+
+                            <div class="form-group">
+                              <label for="title" class="form-label">Title</label>
+                                <input
+                                        type="text"
+                                        class="form-control"
+                                        id="title"
+                                        th:field="*{title}"
+                                        th:value="${post.title}"
+                                        th:classappend="${#fields.hasErrors('title') ? 'is-invalid' : ''}"
+                                        placeholder="Enter Post Title"
+                                >
+
+                                <div class="invalid-feedback" th:each="error : ${#fields.errors('title')}" th:text="${error}">
+
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="category" class="form-label">Category</label>
+                                <select class="form-control" id="category" name="categoryId" placeholder="Category">
+                                    <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.title}"></option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="content" class="form-label">Content</label>
+                                <textarea
+                                        class="form-control"
+                                        id="content"
+                                        th:field="*{content}"
+                                        th:value="${post.content}"
+                                        th:classappend="${#fields.hasErrors('content') ? 'is-invalid' : ''}"
+                                        placeholder="Write Your Post"
+                                        rows="5"></textarea>
+
+                                <div class="invalid-feedback" th:each="error : ${#fields.errors('content')}" th:text="${error}">
+
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="imageFile" class="form-label">Feature Image</label>
+                                <input
+                                        type="file"
+                                        class="form-control"
+                                        id="imageFile"
+                                        name="imageFile"
+                                >
+                            </div>
+
+                            <input type="submit" th:value="Publish" class="btn btn-primary mt-3">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

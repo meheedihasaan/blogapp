@@ -9,14 +9,14 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.security.crypto.password.PasswordEncoder;
+//import org.springframework.security.crypto.password.PasswordEncoder;
 import java.util.List;
 
 @SpringBootApplication
 public class BlogappApplication implements CommandLineRunner {
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+//    @Autowired
+//    private PasswordEncoder passwordEncoder;
 
     @Autowired
     private RoleRepository roleRepository;
@@ -33,7 +33,7 @@ public class BlogappApplication implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         //To print the encoded password
-        System.out.println(passwordEncoder.encode("1234"));
+        //System.out.println(passwordEncoder.encode("1234"));
 
         //To create roles
         try {

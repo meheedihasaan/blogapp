@@ -14,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -81,7 +82,7 @@ public class UserServiceImplementation implements UserService {
     }
 
     @Override
-    public UserDto registerUser(UserDto userDto) {
+    public UserDto signupUser(UserDto userDto) {
         User user = this.dtoToUser(userDto);
         user.setPassword(this.passwordEncoder.encode(user.getPassword()));
         Role role = this.roleRepository.findById(AppConstants.NORMAL_USER).get();
@@ -89,6 +90,16 @@ public class UserServiceImplementation implements UserService {
         this.userRepository.save(user);
 
         return this.userToDto(user);
+    }
+
+    //To get a user by his email
+    @Override
+    public UserDto getUserByEmail(String email) {
+        Optional<User> userOptional = this.userRepository.findByEmail(email);
+        if (userOptional.isEmpty()) {
+            return null;
+        }
+        return this.userToDto(userOptional.get());
     }
 
     //To convert UserDto to User

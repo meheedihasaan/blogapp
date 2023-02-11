@@ -19,6 +19,8 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
     //Custom finder method
     Page findByCategory(Category category, Pageable pageable);
 
+    List<Post> findByCategory(Category category);
+
     //Custom search method
     Page searchByTitleContaining(String keyword, Pageable pageable);
     
