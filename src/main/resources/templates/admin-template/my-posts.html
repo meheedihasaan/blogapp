@@ -15,7 +15,7 @@
         <h4 class="mt-4">My Posts</h4>
         <hr>
 
-        <div class="row">
+        <div class="row mb-3">
             <div class="col-12">
                 <h4 class="text-center mb-4">Post List</h4>
                 <table class="table table-striped table-fixed">
@@ -37,13 +37,13 @@
                         <td th:text="${post.title}"></td>
                         <td th:text="${post.category.title}"></td>
                         <td>
-                            <a class="btn btn-sm btn-success" th:href="@{/admin-panel/posts/{id}/{title} (id = ${post.id}, title = ${post.title}) }">
+                            <a class="btn btn-sm btn-success" th:href="@{/admin-panel/posts/my-posts/{id}/{title} (id = ${post.id}, title = ${post.title}) }">
                                 <i class="fa fa-eye"></i>
                             </a>
-                            <a class="btn btn-sm btn-primary" th:href="@{/admin-panel/posts/{id}/{title}/edit (id = ${post.id}, title = ${post.title}) }">
+                            <a class="btn btn-sm btn-primary" th:href="@{/admin-panel/posts/my-posts/{id}/{title}/edit (id = ${post.id}, title = ${post.title}) }">
                                 <i class="fa fa-pen"></i>
                             </a>
-                            <a class="btn btn-sm btn-danger" th:href="@{/admin-panel/posts/{id}/{title}/delete (id = ${post.id}, title = ${post.title}) }">
+                            <a class="btn btn-sm btn-danger" th:href="@{/admin-panel/posts/my-posts/{id}/{title}/delete (id = ${post.id}, title = ${post.title}) }">
                                 <i class="fa fa-trash"></i>
                             </a>
                         </td>
@@ -53,11 +53,11 @@
                 <!-- Pagination -->
                 <nav aria-label="Page navigation example ">
                     <ul class="pagination">
-                        <li th:if="${currentPage != 0}" class="page-item"><a class="page-link" th:href="@{'/admin-panel/posts/all/' + ${currentPage-1}}">Previous</a></li>
+                        <li th:if="${currentPage != 0}" class="page-item"><a class="page-link" th:href="@{'/admin-panel/posts/my-posts/all/' + ${currentPage-1}}">Previous</a></li>
 
-                        <li th:classappend="${currentPage == page-1? 'active' : ''}" th:each="page : ${#numbers.sequence(1, totalPages)}" class="page-item"><a class="page-link" th:href="@{'/admin-panel/posts/all/' + ${page-1}}"><span th:text="${page}"></span></a></li>
+                        <li th:classappend="${currentPage == page-1? 'active' : ''}" th:each="page : ${#numbers.sequence(1, totalPages)}" class="page-item"><a class="page-link" th:href="@{'/admin-panel/posts/my-posts/all/' + ${page-1}}"><span th:text="${page}"></span></a></li>
 
-                        <li th:if="${currentPage+1 != totalPages}" class="page-item"><a class="page-link" th:href="@{'/admin-panel/posts/all/' + ${currentPage+1}}">Next</a></li>
+                        <li th:if="${currentPage+1 != totalPages}" class="page-item"><a class="page-link" th:href="@{'/admin-panel/posts/my-posts/all/' + ${currentPage+1}}">Next</a></li>
                     </ul>
                 </nav>
             </div>

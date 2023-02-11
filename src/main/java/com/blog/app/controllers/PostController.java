@@ -99,7 +99,7 @@ public class PostController {
         }
     }
 
-    @GetMapping("/all/{page}")
+    @GetMapping("/my-posts/all/{page}")
     public String getAllPosts(@PathVariable int page, Model model, Principal principal) {
         model.addAttribute("title", "Mini Blog - My Posts");
         loadCommonData(model, principal);
@@ -112,12 +112,17 @@ public class PostController {
         return "admin-template/my-posts";
     }
 
-    //To get a post by its id
-    @GetMapping("/posts/{id}")
-    public ResponseEntity<PostDto> getPostById(@PathVariable int id){
-        PostDto postDto = this.postService.getPostById(id);
-        return new ResponseEntity<>(postDto, HttpStatus.OK);
+    @GetMapping("/my-posts/{id}/{title}")
+    public String viewPost(@PathVariable int id, Model model, Principal principal) {
+        model.addAttribute("title", "Mini Blog - View Post");
+        loadCommonData(model , principal);
+
+        PostDto post = this.postService.getPostById(id);
+        model.addAttribute("post", post);
+        return "admin-template/view-post";
     }
+
+
 
     //To update a post
     @PutMapping("/posts/{id}/update")

@@ -11,7 +11,7 @@
     <section class="main-content">
         <h4 class="mt-4">Create Post</h4>
         <hr>
-        <div class="row">
+        <div class="row mb-3">
             <div class="col-md-8 offset-md-2">
                 <form method="POST" enctype="multipart/form-data" th:action="@{/admin-panel/posts/create-post/process}" th:object="${post}">
                     <div class="card m-2 p-3">
@@ -76,7 +76,7 @@
                                 >
                             </div>
 
-                            <input type="submit" th:value="Submit" class="btn btn-primary mt-3">
+                            <input type="submit" th:value="Publish" class="btn btn-primary mt-3">
                         </div>
                     </div>
                 </form>
