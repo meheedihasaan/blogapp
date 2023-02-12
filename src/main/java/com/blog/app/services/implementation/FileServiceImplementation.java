@@ -23,7 +23,7 @@ public class FileServiceImplementation implements FileService {
         String randomImageName = randomId.concat(imageName.substring(imageName.lastIndexOf(".")));
 
         File path = new ClassPathResource("static/img").getFile();
-        String filePath = path + File.separator + randomImageName;
+        String filePath = path.getAbsolutePath() + File.separator + randomImageName;
         Files.copy(imageFile.getInputStream(), Paths.get(filePath), StandardCopyOption.REPLACE_EXISTING);
 
         return randomImageName;
