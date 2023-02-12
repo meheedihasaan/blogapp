@@ -16,7 +16,7 @@
         <hr>
         <div class="row mb-3">
             <div class="col-md-8 offset-md-2">
-                <form method="POST" th:action="@{/admin-panel/categories/{id}/{title}/edit-process (id = ${category.id}, title = ${category.title}) }" th:object="${category}">
+                <form method="POST" th:action="@{/admin-panel/categories/{id}/edit-process (id = ${category.id}) }" th:object="${category}">
                     <div class="card m-2 p-3">
                         <div class="card-body">
                             <h4 class="text-center mb-4">Edit Category Information</h4>

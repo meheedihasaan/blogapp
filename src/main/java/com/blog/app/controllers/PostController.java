@@ -121,7 +121,7 @@ public class PostController {
         return "admin-template/view-post";
     }
 
-    @GetMapping("/my-posts/{id}/edit/{title}")
+    @GetMapping("/my-posts/{id}/{title}/edit")
     public String viewEditPostPage(@PathVariable int id, Model model, Principal principal) {
         model.addAttribute("title", "Mini Blog - Edit Post");
         loadCommonData(model, principal);
@@ -148,7 +148,9 @@ public class PostController {
             if (bindingResult.hasErrors()) {
                 List<CategoryDto> categories = this.categoryService.getAllCategories();
                 CategoryDto category = this.categoryService.getCategoryByID(categoryId);
-                post.setCategory(category);
+                PostDto existingPost = this.postService.getPostById(post.getId());
+                post.setCategory(category);                     //To view category even if there is binding error
+                post.setImageUrl(existingPost.getImageUrl());   //To view image even if there is binding error
                 model.addAttribute("post", post);
                 model.addAttribute("categories", categories);
                 return "admin-template/edit-post";

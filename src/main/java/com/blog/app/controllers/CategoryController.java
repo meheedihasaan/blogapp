@@ -99,7 +99,7 @@ public class CategoryController {
         return "admin-template/edit-category";
     }
 
-    @PostMapping("/{id}/{title}/edit-process")
+    @PostMapping("/{id}/edit-process")
     public String editCategory(
             @Valid @ModelAttribute("category") CategoryDto category, BindingResult bindingResult,
             RedirectAttributes redirectAttributes,
