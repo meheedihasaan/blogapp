@@ -174,58 +174,20 @@ public class PostController {
 
     }
 
-
-
-    //To update a post
-    @PutMapping("/posts/{id}/update")
-    public ResponseEntity<PostDto> updatePost(@Valid @RequestBody PostDto postDto, @PathVariable int id){
-        PostDto updatedPostDto = this.postService.updatePost(postDto, id);
-        return new ResponseEntity<>(updatedPostDto, HttpStatus.OK);
-    }
-
     //To delete a post
-    //@PreAuthorize("hasRole('ADMIN')")
-    @DeleteMapping("/posts/{id}/delete")
-    public ResponseEntity<ApiResponse> deletePost(@PathVariable int id){
-        this.postService.deletePost(id);
-        return new ResponseEntity<>(new ApiResponse("Post deleted successfully.", true), HttpStatus.OK);
+    @GetMapping("/my-posts/{id}/{title}/delete")
+    public String deleteMyPost(@PathVariable int id, RedirectAttributes redirectAttributes, Principal principal){
+        try {
+            UserDto user = this.userService.getUserByEmail(principal.getName());
+            this.postService.deletePost(id, user.getId());
+            redirectAttributes.addFlashAttribute("message", new Message("alert-success", "Post is deleted successfully."));
+            return "redirect:/admin-panel/posts/my-posts/all/0";
+        }
+        catch (Exception e) {
+            redirectAttributes.addFlashAttribute("message", new Message("alert-danger", "Something went wrong. "+e.getMessage()));
+            return "redirect:/admin-panel/posts/my-posts/all/0";
+        }
     }
 
-    //To get posts by their creator
-    @GetMapping("/user/{userId}/posts")
-    public ResponseEntity<Page<PostDto>> getPostsByUser(
-            @PathVariable int userId,
-            @RequestParam(value = "pageNumber", defaultValue = AppConstants.PAGE_NUMBER, required = false) int pageNumber,
-            @RequestParam(value = "pageSize", defaultValue = AppConstants.PAGE_SIZE, required = false) int pageSize,
-            @RequestParam(value = "sortBy", defaultValue = AppConstants.SORT_BY, required = false) String sortBy,
-            @RequestParam(value = "sortDirection", defaultValue = AppConstants.SORT_DIRECTION, required = false) String sortDirection
-    ){
-        Page<PostDto> postDtoPage = this.postService.getPostsByUser(userId, pageNumber, pageSize, sortBy, sortDirection);
-        return new ResponseEntity<>(postDtoPage, HttpStatus.OK);
-    }
-
-    //To get posts their category
-    @GetMapping("/category/{categoryId}/posts")
-    public ResponseEntity<Page<PostDto>> getPostByCategory(
-            @PathVariable int categoryId,
-            @RequestParam(value = "pageNumber", defaultValue = AppConstants.PAGE_NUMBER, required = false) int pageNumber,
-            @RequestParam(value = "pageSize", defaultValue = AppConstants.PAGE_SIZE, required = false) int pageSize,
-            @RequestParam(value = "sortBy", defaultValue = AppConstants.SORT_BY, required = false) String sortBy,
-            @RequestParam(value = "sortDirection", defaultValue = AppConstants.SORT_DIRECTION, required = false) String sortDirection
-    ){
-        Page<PostDto> postDtoPage = this.postService.getPostByCategory(categoryId, pageNumber, pageSize, sortBy, sortDirection);
-        return new ResponseEntity<>(postDtoPage, HttpStatus.OK);
-    }
-
-    //To search posts by title
-    @GetMapping("/posts/search/{keyword}")
-    public ResponseEntity<PostResponse> searchPosts(
-            @PathVariable String keyword,
-            @RequestParam(value = "pageNumber", defaultValue = AppConstants.PAGE_NUMBER, required = false) int pageNumber,
-            @RequestParam(value = "pageSize", defaultValue = AppConstants.PAGE_SIZE, required = false) int pageSize
-    ){
-        PostResponse postResponse = this.postService.searchPosts(keyword, pageNumber, pageSize);
-        return new ResponseEntity<>(postResponse, HttpStatus.OK);
-    }
 
 }

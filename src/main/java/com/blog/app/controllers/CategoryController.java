@@ -128,15 +128,13 @@ public class CategoryController {
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/{id}/{title}/delete")
     public String deleteCategory(@PathVariable int id, RedirectAttributes redirectAttributes) {
-        System.out.println("inside delete method");
         try {
-            System.out.println("inside try");
             this.categoryService.deleteCategory(id);
             redirectAttributes.addFlashAttribute("message", new Message("alert-success", "Category is deleted successfully."));
             return "redirect:/admin-panel/categories/all/0";
         }
         catch (Exception e) {
-            redirectAttributes.addFlashAttribute("message", new Message("alert-danger", "Something went wrong. "));
+            redirectAttributes.addFlashAttribute("message", new Message("alert-danger", "Something went wrong. "+e.getMessage()));
             return "redirect:/admin-panel/categories/all/0";
         }
     }

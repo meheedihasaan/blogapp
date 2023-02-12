@@ -11,6 +11,68 @@
     <section class="main-content">
         <h4 class="mt-4">Dashboard</h4>
         <hr>
+        <div class="row">
+            <div class="col-lg-3 col-md-6">
+                <div class="card bg-primary text-white mb-4">
+                    <div class="card-body">
+                        <h2 th:text="${categories.size()}"></h2>
+                        <h4>Total Categories</h4>
+                    </div>
+                    <div class="card-footer d-flex align-items-center justify-content-between">
+                        <a class="small text-white stretched-link" th:href="@{/admin-panel/categories/all/0}">View Details</a>
+                        <div class="small text-white">
+                            <i class="fas fa-angle-right"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="card bg-success text-white mb-4">
+                    <div class="card-body">
+                        <h2 th:text="${posts.size()}"></h2>
+                        <h4>My Posts</h4>
+                    </div>
+                    <div class="card-footer d-flex align-items-center justify-content-between">
+                        <a class="small text-white stretched-link" th:href="@{/admin-panel/posts/my-posts/all/0}">View Details</a>
+                        <div class="small text-white">
+                            <i class="fas fa-angle-right"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-5">
+            <div class="col-12">
+                <h4 class=" mb-4">My Latest Posts</h4>
+                <table class="table table-striped table-fixed">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th>Feature Image</th>
+                        <th scope="col">Post Title</th>
+                        <th scope="col">Category</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="post, rowCount : ${posts}">
+                        <td th:text="${rowCount.count}"></td>
+                        <td>
+                            <img style="height: 40px; width: 60px" class="img-fluid rounded" th:src="@{'/img/'+${post.imageUrl}}" alt="Image">
+                        </td>
+                        <td th:text="${post.title}"></td>
+                        <td th:text="${post.category.title}"></td>
+                        <td>
+                            <a class="btn btn-sm btn-success" th:href="@{/admin-panel/posts/my-posts/{id}/{title} (id = ${post.id}, title = ${post.title}) }">
+                                Read More
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </section>
 </body>
 </html>

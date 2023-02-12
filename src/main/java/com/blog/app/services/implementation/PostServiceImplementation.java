@@ -99,8 +99,11 @@ public class PostServiceImplementation implements PostService {
 
     //To delete a post by its id
     @Override
-    public void deletePost(int id) {
-        Post post = this.postRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("Post", "id", id));
+    public void deletePost(int postId, int userId) throws Exception {
+        Post post = this.postRepository.findById(postId).orElseThrow(()->new ResourceNotFoundException("Post", "id", postId));
+        if(post.getUser().getId() != userId) {
+            throw new Exception("Unable to delete this post.");
+        }
         this.postRepository.delete(post);
     }
 
@@ -128,6 +131,29 @@ public class PostServiceImplementation implements PostService {
                                 .collect(Collectors.toList());
 
         return new PageImpl<PostDto>(postsDto, pageable, page.getTotalElements());
+    }
+
+    //To get posts by their creator in dashboard
+    @Override
+    public List<PostDto> getPostsByUser(int userId, String sortBy, String sortDirection) {
+        User user = this.userRepository.findById(userId).orElseThrow(()-> new ResourceNotFoundException("User", "id", userId));
+
+        //To sort
+        Sort sort = null;
+        if (sortDirection.equalsIgnoreCase("asc")) {
+            sort = Sort.by(sortBy).ascending();
+        }
+        else if (sortDirection.equalsIgnoreCase("desc")) {
+            sort = Sort.by(sortBy).descending();
+        }
+
+        List<Post> posts = this.postRepository.findByUser(user);
+        List<PostDto> postsDto = posts
+                                .stream()
+                                .map((post)-> this.postToDto(post))
+                                .collect(Collectors.toList());
+
+        return postsDto;
     }
 
     //To get posts by their category

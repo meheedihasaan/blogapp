@@ -23,10 +23,13 @@ public interface PostService {
     public PostDto updatePost(PostDto postDto, int id);
 
     //To delete a post by its id
-    public void deletePost(int id);
+    public void deletePost(int postId, int userId) throws Exception;
 
     //To get posts by their creator
     public Page<PostDto> getPostsByUser(int userId, int pageNumber, int pageSize, String sortBy, String sortDirection);
+
+    //To get posts by their creator in dashboard
+    public List<PostDto> getPostsByUser(int userId, String sortBy, String sortDirection);
 
     //To get posts by their category
     public Page<PostDto> getPostByCategory(int categoryId, int pageNumber, int pageSize, String sortBy, String sortDirection);
