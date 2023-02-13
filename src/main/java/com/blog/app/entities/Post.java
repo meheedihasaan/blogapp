@@ -22,7 +22,7 @@ public class Post {
     @Column(name = "title", nullable = false, length = 255)
     private String title;
 
-    @Column(name = "content", nullable = false, length = 10000)
+    @Column(name = "content", nullable = false, columnDefinition = "TEXT")
     private String content;
 
     @Column(name = "imageUrl", nullable = false)

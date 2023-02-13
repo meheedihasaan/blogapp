@@ -30,20 +30,24 @@
                     <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th>Feature Image</th>
-                        <th scope="col">Post Title</th>
+<!--                        <th>Feature Image</th>-->
                         <th scope="col">Category</th>
+                        <th scope="col">Post Title</th>
+                        <th scope="col">Published At</th>
                         <th scope="col">Action</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr th:each="post, rowCount : ${postDtoPage}">
                         <td th:text="${rowCount.count + (currentPage*5)}"></td>
+<!--                        <td>-->
+<!--                            <img style="height: 40px; width: 60px" class="img-fluid rounded" th:src="@{'/img/'+${post.imageUrl}}" alt="Image">-->
+<!--                        </td>-->
                         <td>
-                            <img style="height: 40px; width: 60px" class="img-fluid rounded" th:src="@{'/img/'+${post.imageUrl}}" alt="Image">
+                            <span class="badge badge-primary" th:text="${post.category.title}"></span>
                         </td>
                         <td th:text="${post.title}"></td>
-                        <td th:text="${post.category.title}"></td>
+                        <td th:text="${#dates.format(post.date, 'dd-MMM-yyyy')}"></td>
                         <td>
                             <a class="btn btn-sm btn-success" th:href="@{/admin-panel/posts/my-posts/{id}/{title} (id = ${post.id}, title = ${post.title}) }">
                                 <i class="fa fa-eye"></i>

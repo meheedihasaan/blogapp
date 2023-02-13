@@ -92,6 +92,9 @@ public class PostServiceImplementation implements PostService {
         if (postDto.getImageUrl() != null) {
             post.setImageUrl(postDto.getImageUrl());
         }
+        else{
+            post.setImageUrl("default.jpg");  //For Production purpose
+        }
 
         Post updatedPost = this.postRepository.save(post);
         return this.postToDto(updatedPost);

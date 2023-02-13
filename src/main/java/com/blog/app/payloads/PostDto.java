@@ -21,7 +21,7 @@ public class PostDto {
     private String title;
 
     @NotEmpty(message = "Post content is required.")
-    @Size(min = 200, max = 10000, message = "Post content length must be between 200 to 10000 characters.")
+    @Size(min = 200, message = "Post content length must be greater than 200 characters.")
     private String content;
 
     private String imageUrl;

@@ -1,9 +1,6 @@
 package com.blog.app.controllers;
 
-import com.blog.app.configs.AppConstants;
-import com.blog.app.helper.ApiResponse;
 import com.blog.app.helper.Message;
-import com.blog.app.helper.PostResponse;
 import com.blog.app.payloads.CategoryDto;
 import com.blog.app.payloads.PostDto;
 import com.blog.app.payloads.UserDto;
@@ -15,8 +12,6 @@ import com.blog.app.services.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -82,12 +77,14 @@ public class PostController {
                 return "admin-template/create-post";
             }
 
-            if(imageFile.isEmpty()) {
-                redirectAttributes.addFlashAttribute("message", new Message("alert-danger", "Please upload a feature image with your post."));
-                return "redirect:/admin-panel/posts/create-post";
-            }
+            //I have commented out this code for production only
+//            if(imageFile.isEmpty()) {
+//                redirectAttributes.addFlashAttribute("message", new Message("alert-danger", "Please upload a feature image with your post."));
+//                return "redirect:/admin-panel/posts/create-post";
+//            }
 
-            String imageUrl = this.fileService.uploadImage(imageFile);
+            //String imageUrl = this.fileService.uploadImage(imageFile);
+            String imageUrl = "default.jpg";
             this.postService.createPost(post, principal.getName(), categoryId, imageUrl);
             redirectAttributes.addFlashAttribute("message", new Message("alert-primary", "Post is created successfully."));
             return "redirect:/admin-panel/posts/create-post";
@@ -148,18 +145,19 @@ public class PostController {
             if (bindingResult.hasErrors()) {
                 List<CategoryDto> categories = this.categoryService.getAllCategories();
                 CategoryDto category = this.categoryService.getCategoryByID(categoryId);
-                PostDto existingPost = this.postService.getPostById(post.getId());
                 post.setCategory(category);                     //To view category even if there is binding error
-                post.setImageUrl(existingPost.getImageUrl());   //To view image even if there is binding error
+                //PostDto existingPost = this.postService.getPostById(post.getId());
+                //post.setImageUrl(existingPost.getImageUrl());   //To view image even if there is binding error
                 model.addAttribute("post", post);
                 model.addAttribute("categories", categories);
                 return "admin-template/edit-post";
             }
 
-            if(!imageFile.isEmpty()) {
-                String imageUrl = this.fileService.uploadImage(imageFile);
-                post.setImageUrl(imageUrl);
-            }
+            //I have commented out this code for production only
+//            if(!imageFile.isEmpty()) {
+//                String imageUrl = this.fileService.uploadImage(imageFile);
+//                post.setImageUrl(imageUrl);
+//            }
 
             CategoryDto category = this.categoryService.getCategoryByID(categoryId);
             post.setCategory(category);
@@ -174,7 +172,6 @@ public class PostController {
 
     }
 
-    //To delete a post
     @GetMapping("/my-posts/{id}/{title}/delete")
     public String deleteMyPost(@PathVariable int id, RedirectAttributes redirectAttributes, Principal principal){
         try {
