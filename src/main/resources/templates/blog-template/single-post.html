@@ -36,7 +36,7 @@
                 <div class="row blog-entries element-animate">
                     <div class="col-md-8">
                         <div class="post-content-body">
-                            <p th:text="${post.content}"></p>
+                            <p th:utext="${post.content}"></p>
                         </div>
                         <div class="pt-5">
                             <p>Category:  <span th:text="${post.category.title}" class="badge badge-primary"></span></p>
