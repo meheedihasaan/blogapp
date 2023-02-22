@@ -28,7 +28,7 @@
                             Email: <b><span th:text="${user.email}"></span></b>
                         </li>
                         <li class="list-group-item">
-                            <a class="btn btn-primary" href="">Edit Profile</a>
+                            <a class="btn btn-primary" th:href="@{admin-panel/profile/{username}/edit (username = ${user.name}) }">Edit Profile</a>
                         </li>
                     </div>
                 </div>
