@@ -1,33 +1,36 @@
-<!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:replace="blog-template/base::layout(~{:: .main-content})">
+<!doctype html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="admin-template/base::layout(~{:: .main-content})">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Title</title>
+    <title>Document</title>
 </head>
 <body>
-    <section class="main-content bg-light">
-        <div class="row">
-            <div class="col-md-6 offset-md-3">
-                <form method="POST" th:action="@{/signup-process}" th:object="${user}">
+    <section class="main-content">
+        <h4 class="mt-4">Edit Profile</h4>
+        <hr>
+        <div class="row mb-3">
+            <div class="col-md-10 offset-md-1">
+                <form method="POST" th:action="@{/admin-panel/profile/edit-process}" th:object="${user}">
                     <div class="card my-5 mx-2 p-3">
                         <div class="card-body">
-
-                            <!-- FLASH MESSAGE START -->
-                            <div th:if="${message}">
-                                <div class="alert text-center" th:classappend="${message.type}" role="alert" th:text="${message.content}">
-                                </div>
-                            </div>
-                            <!-- FLASH MESSAGE END -->
-
-                            <h2 class="text-center mb-4">Sign Up Here</h2>
+                            <h2 class="text-center mb-4">Edit Profile Information</h2>
 
                             <div class="form-group">
+                                <input type="hidden" th:field="*{id}" th:value="${user.id}">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="name">Name</label>
                                 <input
                                         type="text"
                                         class="form-control"
+                                        id="name"
                                         th:field="*{name}"
                                         th:value="${user.name}"
                                         placeholder="Enter Your Name"
@@ -40,9 +43,11 @@
                             </div>
 
                             <div class="form-group">
+                                <label for="email">Email</label>
                                 <input
                                         type="email"
                                         class="form-control"
+                                        id="email"
                                         th:field="*{email}"
                                         th:value="${user.email}"
                                         th:classappend="${#fields.hasErrors('email') ? 'is-invalid' : ''}"
@@ -55,9 +60,11 @@
                             </div>
 
                             <div class="form-group">
+                                <label for="password">Password</label>
                                 <input
                                         type="password"
                                         class="form-control"
+                                        id="password"
                                         th:field="*{password}"
                                         th:value="${user.password}"
                                         th:classappend="${#fields.hasErrors('password') ? 'is-invalid' : ''}"
@@ -70,8 +77,10 @@
                             </div>
 
                             <div class="form-group">
+                                <label for="description">Description</label>
                                 <textarea
                                         class="form-control"
+                                        id="description"
                                         rows="6"
                                         th:field="*{description}"
                                         th:text="${user.description}"
@@ -84,21 +93,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-group form-check">
-                                <input
-                                        type="checkbox"
-                                        name="agreement"
-                                        id="agreement"
-                                        class="form-check-input"
-                                />
-                                <label for="agreement">Accept terms and conditions</label>
-                            </div>
-
-                            <input type="submit" value="Submit" class="btn btn-primary mt-3">
-
-                            <div class="text-center mt-3">
-                                <p><a th:href="@{/admin-panel/dashboard}">Already have an account? Sign in here</a></p>
-                            </div>
+                            <input type="submit" value="Update" class="btn btn-primary mt-3">
                         </div>
                     </div>
                 </form>

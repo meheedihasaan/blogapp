@@ -16,6 +16,14 @@
         <hr>
         <div class="row mb-4">
             <div class="col-md-8 offset-md-2">
+
+                <!-- FLASH MESSAGE START -->
+                <div th:if="${message}">
+                    <div class="alert text-center" th:classappend="${message.type}" role="alert" th:text="${message.content}">
+                    </div>
+                </div>
+                <!-- FLASH MESSAGE END -->
+
                 <div class="card bg-light">
                     <div class="card-body m-2 p-3">
                         <h4 class="text-center" th:text="${user.name}"></h4>
@@ -28,7 +36,7 @@
                             Email: <b><span th:text="${user.email}"></span></b>
                         </li>
                         <li class="list-group-item">
-                            <a class="btn btn-primary" href="">Edit Profile</a>
+                            <a class="btn btn-primary" th:href="@{/admin-panel/profile/{username}/edit (username = ${user.name}) }">Edit Profile</a>
                         </li>
                     </div>
                 </div>

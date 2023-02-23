@@ -10,6 +10,7 @@ import com.blog.app.repositories.UserRepository;
 import com.blog.app.services.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -67,7 +68,7 @@ public class UserServiceImplementation implements UserService {
         User user = this.userRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("User", "id", id));
         user.setName(userDto.getName());
         user.setEmail(userDto.getEmail());
-        user.setPassword(userDto.getPassword());
+        user.setPassword(this.passwordEncoder.encode(userDto.getPassword()));
         user.setDescription(userDto.getDescription());
 
         User updatedUser = this.userRepository.save(user);
