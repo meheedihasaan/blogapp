@@ -29,7 +29,7 @@ public class UserDto {
 
     @NotEmpty(message = "Password is required.")
     @Size(min = 4, max = 32, message = "Password must be between 4 to 32 characters.")
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    //@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
     @NotEmpty(message = "Description is required.")
